@@ -1,0 +1,36 @@
+[15:25:26]CRs232CB::RecvPacket(P3, S0, C0x43) Recv Timeout [Nothing received]
+[15:25:26]CRs232CB::RecvPacket(P3, S0, C0x43) Recv Timeout [Nothing received]
+[15:25:26]CRs232CB::RecvPacket(P3, S0, C0x43) Recv Timeout [Nothing received]
+[15:35:04]CRs232CB::RecvPacket(P3, S0, C0x43) Recv Timeout [Nothing received]
+[15:35:04]CRs232CB::RecvPacket(P3, S0, C0x43) Recv Timeout [Nothing received]
+[15:35:04]CRs232CB::RecvPacket(P3, S0, C0x43) Recv Timeout [Nothing received]
+[15:38:08]CRs232CB::RecvPacket(P3, S0, C0x43) Recv Timeout [Nothing received]
+[15:38:08]CRs232CB::RecvPacket(P3, S0, C0x43) Recv Timeout [Nothing received]
+[15:38:08]CRs232CB::RecvPacket(P3, S0, C0x43) Recv Timeout [Nothing received]
+[15:38:08]CRs232CB::RecvPacket(P3, S0, C0x53) Recv Timeout [Nothing received]
+[15:38:08]CRs232CB::RecvPacket(P3, S0, C0x53) Recv Timeout [Nothing received]
+[15:38:08]CRs232CB::RecvPacket(P3, S0, C0x53) Recv Timeout [Nothing received]
+[15:38:09]CRs232CB::RecvPacket(P3, S0, C0x43) Recv Timeout [Nothing received]
+[15:38:09]CRs232CB::RecvPacket(P3, S0, C0x43) Recv Timeout [Nothing received]
+[15:38:09]CRs232CB::RecvPacket(P3, S0, C0x43) Recv Timeout [Nothing received]
+[15:39:53]CRs232CB::RecvPacket(P3, S0, C0x43) Recv Timeout [Nothing received]
+[15:39:53]CRs232CB::RecvPacket(P3, S0, C0x43) Recv Timeout [Nothing received]
+[15:39:54]CRs232CB::RecvPacket(P3, S0, C0x43) Recv Timeout [Nothing received]
+[15:41:19]CRs232CB::RecvPacket(P3, S0, C0x43) Recv Timeout [levl:2, Read:20]
+Recv_Buffer :
+	0x00 0x43 0x00 0x00 0x00 0x00 0x00 0x40 0x00 0x00 
+	0x00 0x00 0x00 0x40 0x00 0x00 0x00 0x00 0x00 0xF9 
+[15:41:19]CRs232CB::RecvPacket(P3, S0, C0x43) Recv Timeout [Nothing received]
+[15:41:19]CRs232CB::RecvPacket(P3, S0, C0x43) Recv Timeout [Nothing received]
+[15:41:19]CRs232CB::RecvPacket(P3, S0, C0x43) Recv Timeout [Nothing received]
+[15:41:19]CRs232CB::RecvPacket(P3, S0, C0x43) Recv Timeout [Nothing received]
+[17:15:21]CRs232CB::RecvPacket(P3, S0, C0x43) Recv Timeout [levl:2, Read:38]
+Recv_Buffer :
+	0x00 0x43 0x00 0x00 0x00 0x02 0x00 0x42 0x03 0x00 
+	0x00 0x00 0x00 0x58 0x02 0xB2 0x55 0x0E 0x00 0xB2 
+	0x55 0x0E 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
+	0x00 0xFF 0xFF 0x00 0x00 0x50 0x8E 0xEA 
+[17:15:21]CRs232CB::RecvPacket(P3, S0, C0x43) Recv Timeout [Nothing received]
+[17:15:21]CRs232CB::RecvPacket(P3, S0, C0x43) Recv Timeout [Nothing received]
+[17:15:21]CRs232CB::RecvPacket(P3, S0, C0x43) Recv Timeout [Nothing received]
+[17:15:21]CRs232CB::RecvPacket(P3, S0, C0x43) Recv Timeout [Nothing received]
