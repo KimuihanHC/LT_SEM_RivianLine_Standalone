@@ -92,6 +92,18 @@ public:
 		_T("83V"),
 		_T("83V")
 	};
+#elif (GET_INSPECTOR == SYS_FILM_PEEL_OFF)
+	CString	cTestN[MAX_TESTER_NUM] =
+	{
+		_T("FILM"),
+		_T(""),
+		_T(""),
+		_T(""),
+		_T(""),
+		_T(""),
+		_T(""),
+		_T("MAX"),
+	};
 #endif
 
 public:

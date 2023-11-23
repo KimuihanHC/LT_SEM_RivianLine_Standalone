@@ -26,7 +26,9 @@ bool CDevice::ConnectDevicez()
 	g_hEvent_ProgramExit = CreateEvent(NULL, TRUE, FALSE, NULL);
 
 	// Ajin board init
-	//AJIN_MO->Init_Ajin();
+#if(GET_INSPECTOR == SYS_FILM_PEEL_OFF)
+	AJIN_MO->Init_Ajin();
+#endif
 	AJIN_IO->Start_AjinIO();
 
 	DWORD BaudInitList_Motor[] = { 9600, 19200, 38400, 57600, 115200 };
@@ -43,7 +45,9 @@ bool CDevice::ConnectDevicez()
 
 	FAS_MO->Disconnect_EziServo();
 
-	bRet = FAS_MO->Connect_EziServo(stSpeed.nPort[0], BaudInitList_Motor[stSpeed.nBaudRate[0]]);
+	//20231123
+	//bRet = FAS_MO->Connect_EziServo(stSpeed.nPort[0], BaudInitList_Motor[stSpeed.nBaudRate[0]]);
+	bRet = FAS_MO->Connect_EziServo(stSpeed.nPort[0], BaudInitList_Motor[0]);
 	if (bRet == false)
 		WRITE_MAIN_LOG(_T("EziServo_Connect Fail"));
 	else
@@ -161,8 +165,11 @@ bool CDevice::ConnectDevicez()
 
 	// [21.1214.5]
 	AJIN_IO->SendOutputBit(DIO_OUTPUT_Y0_09_TOWERLAMP_BEEP1, FALSE);
+#if(GET_INSPECTOR == SYS_OQC_SFR_MULTI_CL) || (GET_INSPECTOR == SYS_OQC_SFR_SINGLE_CL) || (GET_INSPECTOR == SYS_DISTORTION_30)
 	AJIN_IO->SendOutputBit(DIO_OUTPUT_Y0_0B_SLEEP_MODE_ON, FALSE);
-
+#elif(GET_INSPECTOR == SYS_FILM_PEEL_OFF)
+	AJIN_IO->SendOutputBit(DIO_OUTPUT_Y0_11_SLEEP_MODE_ON, FALSE);
+#endif
 #if(GET_INSPECTOR == SYS_OQC_SFR_MULTI_CL)
 	AJIN_IO->SendOutputBit(DIO_OUTPUT_Y0_10_DOORLOCK_ONOFF_FRONT, TRUE);
 	AJIN_IO->SendOutputBit(DIO_OUTPUT_Y0_11_DOORLOCK_ONOFF_LEFT1, TRUE);
@@ -185,6 +192,10 @@ bool CDevice::ConnectDevicez()
 	AJIN_IO->SendOutputBit(DIO_OUTPUT_Y0_14_DOORLOCK_ONOFF_RIGHT2, TRUE);
 	AJIN_IO->SendOutputBit(DIO_OUTPUT_Y0_15_DOORLOCK_ONOFF_BACK1, TRUE);
 	AJIN_IO->SendOutputBit(DIO_OUTPUT_Y0_16_DOORLOCK_ONOFF_BACK2, TRUE);
+#elif(GET_INSPECTOR == SYS_FILM_PEEL_OFF)
+	AJIN_IO->SendOutputBit(DIO_INPUT_X0_16_REAR_DOORLOCK1_OPENCLOSE, TRUE);
+	AJIN_IO->SendOutputBit(DIO_INPUT_X0_17_REAR_DOORLOCK2_OPENCLOSE, TRUE);
+	AJIN_IO->SendOutputBit(DIO_INPUT_X0_18_REAR_DOORLOCK3_OPENCLOSE, TRUE);
 #endif
 
 	SEQUENCE->Start_Inlk();

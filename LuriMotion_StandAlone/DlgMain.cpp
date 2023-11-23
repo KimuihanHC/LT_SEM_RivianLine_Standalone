@@ -492,8 +492,10 @@ void CDlgMain::ChangeDectectedUI_Status()
 {
 	BOOL b1 = FALSE;
 	BOOL b2 = FALSE;
+	BOOL b3 = FALSE;
 
 	//전면
+#if(GET_INSPECTOR == SYS_OQC_SFR_MULTI_CL) || (GET_INSPECTOR == SYS_OQC_SFR_SINGLE_CL) || (GET_INSPECTOR == SYS_DISTORTION_30)
 	if (AJIN_IO->GetInputIoBit(DIO_INPUT_X0_10_FRONT_DOORLOCK_OPENCLOSE) == FALSE)
 	{
 		m_stMainComm_IO_Input_Status[0][1].SetStaticStyle(CVGStatic::StaticStyle_Data);
@@ -506,6 +508,7 @@ void CDlgMain::ChangeDectectedUI_Status()
 		m_stMainComm_IO_Input_Status[0][1].SetColorStyle(CVGStatic::ColorStyle_Black);
 		m_stMainComm_IO_Input_Status[0][1].SetFont_Gdip(L"Arial", 9.0F);
 	}
+#endif
 
 	//좌측
 #if(GET_INSPECTOR == SYS_OQC_SFR_MULTI_CL)
@@ -541,9 +544,16 @@ void CDlgMain::ChangeDectectedUI_Status()
 #elif(GET_INSPECTOR == SYS_DISTORTION_30)
 	b1 = AJIN_IO->GetInputIoBit(DIO_INPUT_X0_15_BACK_DOORLOCK1_OPENCLOSE);
 	b2 = AJIN_IO->GetInputIoBit(DIO_INPUT_X0_16_BACK_DOORLOCK2_OPENCLOSE);
+#elif(GET_INSPECTOR == SYS_FILM_PEEL_OFF)
+	b1 = AJIN_IO->GetInputIoBit(DIO_INPUT_X0_16_REAR_DOORLOCK1_OPENCLOSE);
+	b2 = AJIN_IO->GetInputIoBit(DIO_INPUT_X0_17_REAR_DOORLOCK2_OPENCLOSE);
+	b3 = AJIN_IO->GetInputIoBit(DIO_INPUT_X0_18_REAR_DOORLOCK3_OPENCLOSE);
 #endif
 
+#if(GET_INSPECTOR == SYS_OQC_SFR_MULTI_CL) || (GET_INSPECTOR == SYS_OQC_SFR_SINGLE_CL) || (GET_INSPECTOR == SYS_DISTORTION_30)
 	if (b1 == FALSE && b2 == FALSE)
+#elif(GET_INSPECTOR == SYS_FILM_PEEL_OFF)
+	if (b1 == FALSE && b2 == FALSE && b3 == FALSE)
 	{
 		m_stMainComm_IO_Output_Status[0][1].SetStaticStyle(CVGStatic::StaticStyle_Data);
 		m_stMainComm_IO_Output_Status[0][1].SetColorStyle(CVGStatic::ColorStyle_Green);
@@ -555,6 +565,7 @@ void CDlgMain::ChangeDectectedUI_Status()
 		m_stMainComm_IO_Output_Status[0][1].SetColorStyle(CVGStatic::ColorStyle_Black);
 		m_stMainComm_IO_Output_Status[0][1].SetFont_Gdip(L"Arial", 9.0F);
 	}
+#endif
 
 	//우측
 #if(GET_INSPECTOR == SYS_OQC_SFR_MULTI_CL)
@@ -629,7 +640,7 @@ void CDlgMain::OnTimer(UINT_PTR nIDEvent)
 		if (COMMON->GetReplaceFlag() == TRUE)
 			ChangeDayProduct();
 
-		// Motor Statu\s
+		// Motor Status
 		ReadMotorStatus_Fastech();
 
 		// Comm Status

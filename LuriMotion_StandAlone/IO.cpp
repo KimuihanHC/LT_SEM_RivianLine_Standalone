@@ -129,12 +129,20 @@ bool CIO::IO_I_MainAirPress()
 
 bool CIO::IO_I_SleepMode()
 {
+#if(GET_INSPECTOR == SYS_OQC_SFR_MULTI_CL) || (GET_INSPECTOR == SYS_OQC_SFR_SINGLE_CL) || (GET_INSPECTOR == SYS_DISTORTION_30)
 	return AJIN_IO->GetInputIoBit(DIO_INPUT_X0_0B_SLEEPMODE_ON_SENSOR);
+#elif(GET_INSPECTOR == SYS_FILM_PEEL_OFF)
+	return AJIN_IO->GetInputIoBit(DIO_INPUT_X0_11_SLEEPMODE_ON_SENSOR);
+#endif
 }
 
 void CIO::IO_O_SleepMode(__in bool bOn)
 {
+#if(GET_INSPECTOR == SYS_OQC_SFR_MULTI_CL) || (GET_INSPECTOR == SYS_OQC_SFR_SINGLE_CL) || (GET_INSPECTOR == SYS_DISTORTION_30)
 	AJIN_IO->SendOutputBit(DIO_OUTPUT_Y0_0B_SLEEP_MODE_ON, bOn);
+#elif(GET_INSPECTOR == SYS_FILM_PEEL_OFF)
+	AJIN_IO->SendOutputBit(DIO_OUTPUT_Y0_11_SLEEP_MODE_ON, bOn);
+#endif
 }
 
 void CIO::IO_O_Buzzer(__in bool bOn)
@@ -161,7 +169,7 @@ void CIO::IO_O_RESET(__in bool bOn)
 
 void CIO::IO_O_INIT(__in bool bOn)
 {
-#if(GET_INSPECTOR == SYS_OQC_SFR_MULTI_CL) || (GET_INSPECTOR == SYS_OQC_SFR_SINGLE_CL)
+#if(GET_INSPECTOR == SYS_OQC_SFR_MULTI_CL) || (GET_INSPECTOR == SYS_OQC_SFR_SINGLE_CL) || (GET_INSPECTOR == SYS_FILM_PEEL_OFF)	
 	if (bOn)
 	{
 		if (!g_bBlinkInitializeBtn)
@@ -183,7 +191,6 @@ bool CIO::IO_I_Socket_In()
 #if (GET_INSPECTOR == SYS_OQC_SFR_MULTI_CL) || (GET_INSPECTOR == SYS_OQC_SFR_SINGLE_CL)
 	return (AJIN_IO->GetInputIoBit(DIO_INPUT_X0_1C_SOCKET_IN) == TRUE
 		&& AJIN_IO->GetInputIoBit(DIO_INPUT_X0_1D_SOCKET_OUT) == FALSE);
-#else
 	return true;
 #endif
 }
@@ -220,7 +227,8 @@ bool CIO::IO_I_Socket_Down()
 
 bool CIO::IO_I_Camera_Fix_Cylinder_On()
 {
-	if (GET_INSPECTOR == SYS_DISTORTION_30)
+#if(GET_INSPECTOR == SYS_OQC_SFR_MULTI_CL) || (GET_INSPECTOR == SYS_OQC_SFR_SINGLE_CL) || (GET_INSPECTOR == SYS_DISTORTION_30)
+	if (GET_INSPECTOR == SYS_DISTORTION_30) 
 	{
 		Sleep(500);
 		return true;
@@ -230,24 +238,39 @@ bool CIO::IO_I_Camera_Fix_Cylinder_On()
 		return (AJIN_IO->GetInputIoBit(DIO_INPUT_X0_0C_CAMERA_FIX_CYL_ON) == TRUE
 			&& AJIN_IO->GetInputIoBit(DIO_INPUT_X0_0D_CAMERA_FIX_CYL_OFF) == FALSE);
 	}
+#elif(GET_INSPECTOR == SYS_FILM_PEEL_OFF)
+	return true;
+#endif
 }
 
 bool CIO::IO_I_Camera_Fix_Cylinder_Off()
 {
+#if(GET_INSPECTOR == SYS_OQC_SFR_MULTI_CL) || (GET_INSPECTOR == SYS_OQC_SFR_SINGLE_CL) || (GET_INSPECTOR == SYS_DISTORTION_30)
 	return (AJIN_IO->GetInputIoBit(DIO_INPUT_X0_0C_CAMERA_FIX_CYL_ON) == FALSE
 		&& AJIN_IO->GetInputIoBit(DIO_INPUT_X0_0D_CAMERA_FIX_CYL_OFF) == TRUE);
+#elif(GET_INSPECTOR == SYS_FILM_PEEL_OFF)
+	return true;
+#endif
 }
 
 bool CIO::IO_I_ProbePin_Up()
 {
+#if(GET_INSPECTOR == SYS_OQC_SFR_MULTI_CL) || (GET_INSPECTOR == SYS_OQC_SFR_SINGLE_CL) || (GET_INSPECTOR == SYS_DISTORTION_30)
 	return (AJIN_IO->GetInputIoBit(DIO_INPUT_X0_0E_PROBEPIN_UP) == TRUE
 		&& AJIN_IO->GetInputIoBit(DIO_INPUT_X0_0F_PROBEPIN_DOWN) == FALSE);
+#elif(GET_INSPECTOR == SYS_FILM_PEEL_OFF)
+	return true;
+#endif
 }
 
 bool CIO::IO_I_ProbePin_Down()
 {
+#if(GET_INSPECTOR == SYS_OQC_SFR_MULTI_CL) || (GET_INSPECTOR == SYS_OQC_SFR_SINGLE_CL) || (GET_INSPECTOR == SYS_DISTORTION_30)
 	return (AJIN_IO->GetInputIoBit(DIO_INPUT_X0_0E_PROBEPIN_UP) == FALSE
 		&& AJIN_IO->GetInputIoBit(DIO_INPUT_X0_0F_PROBEPIN_DOWN) == TRUE);
+#elif(GET_INSPECTOR == SYS_FILM_PEEL_OFF)
+	return true;
+#endif
 }
 
 bool CIO::IO_I_DetectCamera()
@@ -259,6 +282,8 @@ bool CIO::IO_I_DetectCamera()
 #elif(GET_INSPECTOR == SYS_OQC_SFR_SINGLE_CL)
 	bRet = AJIN_IO->GetInputIoBit(DIO_INPUT_X0_08_CAMERA_DETECT_SENSOR);
 #elif(GET_INSPECTOR == SYS_DISTORTION_30)
+	bRet = true;
+#elif(GET_INSPECTOR == SYS_FILM_PEEL_OFF)
 	bRet = true;
 #endif
 
@@ -278,6 +303,8 @@ bool CIO::IO_I_SocketCoverOpen()
 		bRet = false;
 	else
 		bRet = true;
+#elif(GET_INSPECTOR == SYS_FILM_PEEL_OFF)
+	bRet = true;
 #endif
 
 	return bRet;
@@ -396,7 +423,7 @@ bool CIO::IO_O_Socket_Down(bool bCheckStatus)
 bool CIO::IO_O_Camera_Fix_Cylinder_On(bool bCheckStatus)
 {
 	auto bRet = false;
-
+#if(GET_INSPECTOR == SYS_OQC_SFR_MULTI_CL) || (GET_INSPECTOR == SYS_OQC_SFR_SINGLE_CL) || (GET_INSPECTOR == SYS_DISTORTION_30)
 	AJIN_IO->SendOutputBit(DIO_OUTPUT_Y0_0D_CAMERA_FIX_CYL_OFF, FALSE);
 	AJIN_IO->SendOutputBit(DIO_OUTPUT_Y0_0C_CAMERA_FIX_CYL_ON, TRUE);
 
@@ -420,13 +447,16 @@ bool CIO::IO_O_Camera_Fix_Cylinder_On(bool bCheckStatus)
 	{
 		bRet = true;
 	}
+#elif(GET_INSPECTOR == SYS_FILM_PEEL_OFF)
+	bRet = true;
+#endif
 	return bRet;
 }
 
 bool CIO::IO_O_Camera_Fix_Cylinder_Off(bool bCheckStatus)
 {
 	auto bRet = false;
-
+#if(GET_INSPECTOR == SYS_OQC_SFR_MULTI_CL) || (GET_INSPECTOR == SYS_OQC_SFR_SINGLE_CL) || (GET_INSPECTOR == SYS_DISTORTION_30)
 	AJIN_IO->SendOutputBit(DIO_OUTPUT_Y0_0C_CAMERA_FIX_CYL_ON, FALSE);
 	AJIN_IO->SendOutputBit(DIO_OUTPUT_Y0_0D_CAMERA_FIX_CYL_OFF, TRUE);
 
@@ -442,13 +472,16 @@ bool CIO::IO_O_Camera_Fix_Cylinder_Off(bool bCheckStatus)
 	{
 		bRet = true;
 	}
+#elif(GET_INSPECTOR == SYS_FILM_PEEL_OFF)
+	bRet = true;
+#endif
 	return bRet;
 }
 
 bool CIO::IO_O_ProbePin_Up(bool bCheckStatus)
 {
 	auto bRet = false;
-
+#if(GET_INSPECTOR == SYS_OQC_SFR_MULTI_CL) || (GET_INSPECTOR == SYS_OQC_SFR_SINGLE_CL) || (GET_INSPECTOR == SYS_DISTORTION_30)
 	AJIN_IO->SendOutputBit(DIO_OUTPUT_Y0_0F_PROBEPIN_CYLINDER_DOWN, FALSE);
 	AJIN_IO->SendOutputBit(DIO_OUTPUT_Y0_0E_PROBEPIN_CYLINDER_UP, TRUE);
 
@@ -464,13 +497,16 @@ bool CIO::IO_O_ProbePin_Up(bool bCheckStatus)
 	{
 		bRet = true;
 	}
+#elif(GET_INSPECTOR == SYS_FILM_PEEL_OFF)
+	bRet = true;
+#endif
 	return bRet;
 }
 
 bool CIO::IO_O_ProbePin_Down(bool bCheckStatus)
 {
 	auto bRet = false;
-
+#if(GET_INSPECTOR == SYS_OQC_SFR_MULTI_CL) || (GET_INSPECTOR == SYS_OQC_SFR_SINGLE_CL) || (GET_INSPECTOR == SYS_DISTORTION_30)
 	AJIN_IO->SendOutputBit(DIO_OUTPUT_Y0_0E_PROBEPIN_CYLINDER_UP, FALSE);
 	AJIN_IO->SendOutputBit(DIO_OUTPUT_Y0_0F_PROBEPIN_CYLINDER_DOWN, TRUE);
 
@@ -486,6 +522,9 @@ bool CIO::IO_O_ProbePin_Down(bool bCheckStatus)
 	{
 		bRet = true;
 	}
+#elif(GET_INSPECTOR == SYS_FILM_PEEL_OFF)
+	bRet = true;
+#endif
 	return bRet;
 }
 
@@ -495,8 +534,692 @@ bool CIO::MoveSocketToSaftyZone()
 	bRet = IO_O_ProbePin_Down();
 	bRet &= IO_O_Socket_Down();
 	bRet &= IO_O_Socket_In();
-
+#if (GET_INSPECTOR == SYS_FILM_PEEL_OFF)
+	bRet &= IO_O_Socket_State_PCB_Gripper_Off();
+	bRet &= IO_O_Socket_State_PCB_Gripper_Down();
+	bRet &= IO_O_CoverPush_Gripper_Up();
+	for (int i = 0; i < MAX_SIDE; i++) {
+		bRet &= IO_O_Flim_Gripper_Back(i);
+		bRet &= IO_O_Flim_Gripper_Off(i);
+		bRet &= IO_O_Flim_Gripper_Cover_Off(i);
+	}
+	
+#endif
 	return bRet;
+}
+
+void CIO::IO_O_Muting(__in bool bOn)
+{
+#if (GET_INSPECTOR == SYS_FILM_PEEL_OFF)
+	AJIN_IO->SendOutputBit(DIO_OUTPUT_Y0_09_TOWERLAMP_BEEP1, bOn);
+#endif
+}
+
+bool CIO::IO_I_Socket_State_PCB_Gripper_On()
+{
+#if (GET_INSPECTOR == SYS_FILM_PEEL_OFF)
+	return (AJIN_IO->GetInputIoBit(DIO_INPUT_X1_18_SOCKET_STAGE_UNIT_PCB_GRIPPER_CYLINDER_CLOSE_ON) == TRUE
+		&& AJIN_IO->GetInputIoBit(DIO_INPUT_X1_19_SOCKET_STAGE_UNIT_PCB_GRIPPER_CYLINDER_OPEN_OFF) == FALSE);
+	return true;
+#endif
+}
+
+bool CIO::IO_I_Socket_State_PCB_Gripper_Off()
+{
+#if (GET_INSPECTOR == SYS_FILM_PEEL_OFF)
+	return (AJIN_IO->GetInputIoBit(DIO_INPUT_X1_18_SOCKET_STAGE_UNIT_PCB_GRIPPER_CYLINDER_CLOSE_ON) == FALSE
+		&& AJIN_IO->GetInputIoBit(DIO_INPUT_X1_19_SOCKET_STAGE_UNIT_PCB_GRIPPER_CYLINDER_OPEN_OFF) == TRUE);
+#else
+	return true;
+#endif
+}
+
+bool CIO::IO_I_Socket_State_PCB_Gripper_Up()
+{
+#if (GET_INSPECTOR == SYS_FILM_PEEL_OFF)
+	return (AJIN_IO->GetInputIoBit(DIO_INPUT_X1_20_SOCKET_STAGE_UNIT_PCB_GRIPPER_CYLINDER_UP) == TRUE
+		&& AJIN_IO->GetInputIoBit(DIO_INPUT_X1_21_SOCKET_STAGE_UNIT_PCB_GRIPPER_CYLINDER_DOWN) == FALSE);
+#else
+	return true;
+#endif
+}
+
+bool CIO::IO_I_Socket_State_PCB_Gripper_Down()
+{
+#if (GET_INSPECTOR == SYS_FILM_PEEL_OFF)
+	return (AJIN_IO->GetInputIoBit(DIO_INPUT_X1_20_SOCKET_STAGE_UNIT_PCB_GRIPPER_CYLINDER_UP) == FALSE
+		&& AJIN_IO->GetInputIoBit(DIO_INPUT_X1_21_SOCKET_STAGE_UNIT_PCB_GRIPPER_CYLINDER_DOWN) == TRUE);
+#else
+	return true;
+#endif
+}
+
+bool CIO::IO_I_CoverPush_Gripper_Up()
+{
+#if (GET_INSPECTOR == SYS_FILM_PEEL_OFF)
+	return (AJIN_IO->GetInputIoBit(DIO_INPUT_X1_30_LENS_COVER_PUSH_UNIT_UPDOWN_GRIPPER_CYLINDER_UP) == TRUE
+		&& AJIN_IO->GetInputIoBit(DIO_INPUT_X1_31_LENS_COVER_PUSH_UNIT_UPDOWN_GRIPPER_CYLINDER_DOWN) == FALSE);
+#else
+	return true;
+#endif
+}
+
+bool CIO::IO_I_CoverPush_Gripper_Down()
+{
+#if (GET_INSPECTOR == SYS_FILM_PEEL_OFF)
+	return (AJIN_IO->GetInputIoBit(DIO_INPUT_X1_30_LENS_COVER_PUSH_UNIT_UPDOWN_GRIPPER_CYLINDER_UP) == FALSE
+		&& AJIN_IO->GetInputIoBit(DIO_INPUT_X1_31_LENS_COVER_PUSH_UNIT_UPDOWN_GRIPPER_CYLINDER_DOWN) == TRUE);
+#else
+	return true;
+#endif
+}
+
+bool CIO::IO_I_Flim_Gripper_For(__in int nSelect)
+{
+#if (GET_INSPECTOR == SYS_FILM_PEEL_OFF)
+	if (nSelect == LEFT_SIDE) {
+		return (AJIN_IO->GetInputIoBit(DIO_INPUT_X1_06_GRIPPER_UNIT_GRIPPER_FRONT_CYLINDER_LEFT) == TRUE
+			&& AJIN_IO->GetInputIoBit(DIO_INPUT_X1_07_GRIPPER_UNIT_GRIPPER_REAR_CYLINDER_LEFT) == FALSE);
+	}
+	if (nSelect == RIGHT_SIDE) {
+		return (AJIN_IO->GetInputIoBit(DIO_INPUT_X1_08_GRIPPER_UNIT_GRIPPER_FRONT_CYLINDER_RIGHT) == TRUE
+			&& AJIN_IO->GetInputIoBit(DIO_INPUT_X1_09_GRIPPER_UNIT_GRIPPER_REAR_CYLINDER_RIGHT) == FALSE);
+	}
+#else
+	return true;
+#endif
+}
+
+bool CIO::IO_I_Flim_Gripper_Back(__in int nSelect)
+{
+#if (GET_INSPECTOR == SYS_FILM_PEEL_OFF)
+	if (nSelect == LEFT_SIDE) {
+		return (AJIN_IO->GetInputIoBit(DIO_INPUT_X1_06_GRIPPER_UNIT_GRIPPER_FRONT_CYLINDER_LEFT) == FALSE
+			&& AJIN_IO->GetInputIoBit(DIO_INPUT_X1_07_GRIPPER_UNIT_GRIPPER_REAR_CYLINDER_LEFT) == TRUE);
+	}
+	if (nSelect == RIGHT_SIDE) {
+		return (AJIN_IO->GetInputIoBit(DIO_INPUT_X1_08_GRIPPER_UNIT_GRIPPER_FRONT_CYLINDER_RIGHT) == FALSE
+			&& AJIN_IO->GetInputIoBit(DIO_INPUT_X1_09_GRIPPER_UNIT_GRIPPER_REAR_CYLINDER_RIGHT) == TRUE);
+	}
+#else
+	return true;
+#endif
+}
+
+bool CIO::IO_I_Flim_Gripper_On(__in int nSelect)
+{
+#if (GET_INSPECTOR == SYS_FILM_PEEL_OFF)
+	if (nSelect == LEFT_SIDE) {
+		return (AJIN_IO->GetInputIoBit(DIO_INPUT_X1_00_GRIPPER_UNIT_FILM_GRIPPER_CYLINDER_ON_LEFT) == TRUE
+			&& AJIN_IO->GetInputIoBit(DIO_INPUT_X1_01_GRIPPER_UNIT_FILM_GRIPPER_CYLINDER_OFF_LEFT) == FALSE);
+	}
+	if (nSelect == RIGHT_SIDE) {
+		return (AJIN_IO->GetInputIoBit(DIO_INPUT_X1_02_GRIPPER_UNIT_FILM_GRIPPER_CYLINDER_ON_RIGHT) == TRUE
+			&& AJIN_IO->GetInputIoBit(DIO_INPUT_X1_03_GRIPPER_UNIT_FILM_GRIPPER_CYLINDER_OFF_RIGHT) == FALSE);
+	}
+#else
+	return true;
+#endif
+}
+
+bool CIO::IO_I_Flim_Gripper_Off(__in int nSelect)
+{
+#if (GET_INSPECTOR == SYS_FILM_PEEL_OFF)
+	if (nSelect == LEFT_SIDE) {
+		return (AJIN_IO->GetInputIoBit(DIO_INPUT_X1_06_GRIPPER_UNIT_GRIPPER_FRONT_CYLINDER_LEFT) == FALSE
+			&& AJIN_IO->GetInputIoBit(DIO_INPUT_X1_07_GRIPPER_UNIT_GRIPPER_REAR_CYLINDER_LEFT) == TRUE);
+	}
+	if (nSelect == RIGHT_SIDE) {
+		return (AJIN_IO->GetInputIoBit(DIO_INPUT_X1_08_GRIPPER_UNIT_GRIPPER_FRONT_CYLINDER_RIGHT) == FALSE
+			&& AJIN_IO->GetInputIoBit(DIO_INPUT_X1_09_GRIPPER_UNIT_GRIPPER_REAR_CYLINDER_RIGHT) == TRUE);
+	}
+#else
+	return true;
+#endif
+}
+
+bool CIO::IO_I_Flim_Gripper_Cover_On(__in int nSelect)
+{
+#if (GET_INSPECTOR == SYS_FILM_PEEL_OFF)
+	if (nSelect == LEFT_SIDE) {
+		return (AJIN_IO->GetInputIoBit(DIO_INPUT_X1_12_GRIPPER_UNIT_COVER_GRIPPER_CYLINDER_ON_LEFT) == TRUE
+			&& AJIN_IO->GetInputIoBit(DIO_INPUT_X1_13_GRIPPER_UNIT_COVER_GRIPPER_CYLINDER_OFF_LEFT) == FALSE);
+	}
+	if (nSelect == RIGHT_SIDE) {
+		return (AJIN_IO->GetInputIoBit(DIO_INPUT_X1_14_GRIPPER_UNIT_COVER_GRIPPER_CYLINDER_ON_RIGHT) == TRUE
+			&& AJIN_IO->GetInputIoBit(DIO_INPUT_X1_15_GRIPPER_UNIT_COVER_GRIPPER_CYLINDER_OFF_RIGHT) == FALSE);
+	}
+#else
+	return true;
+#endif
+}
+
+bool CIO::IO_I_Flim_Gripper_Cover_Off(__in int nSelect)
+{
+#if (GET_INSPECTOR == SYS_FILM_PEEL_OFF)
+	if (nSelect == LEFT_SIDE) {
+		return (AJIN_IO->GetInputIoBit(DIO_INPUT_X1_12_GRIPPER_UNIT_COVER_GRIPPER_CYLINDER_ON_LEFT) == FALSE
+			&& AJIN_IO->GetInputIoBit(DIO_INPUT_X1_13_GRIPPER_UNIT_COVER_GRIPPER_CYLINDER_OFF_LEFT) == TRUE);
+	}
+	if (nSelect == RIGHT_SIDE) {
+		return (AJIN_IO->GetInputIoBit(DIO_INPUT_X1_14_GRIPPER_UNIT_COVER_GRIPPER_CYLINDER_ON_RIGHT) == FALSE
+			&& AJIN_IO->GetInputIoBit(DIO_INPUT_X1_15_GRIPPER_UNIT_COVER_GRIPPER_CYLINDER_OFF_RIGHT) == TRUE);
+	}
+#else
+	return true;
+#endif
+}
+
+bool CIO::IO_I_Flim_Gripper_Film_Box_Dtc(__in int nSelect)
+{
+#if (GET_INSPECTOR == SYS_FILM_PEEL_OFF)
+	if (nSelect == LEFT_SIDE) {
+		return AJIN_IO->GetInputIoBit(DIO_INPUT_X0_22_GRIPPER_UNIT_FILM_BOX_DETECT_SENSOR_LEFT);
+	}
+	if (nSelect == RIGHT_SIDE) {
+		return AJIN_IO->GetInputIoBit(DIO_INPUT_X0_23_GRIPPER_UNIT_FILM_BOX_DETECT_SENSOR_RIGHT);
+	}
+#else
+	return true;
+#endif
+}
+
+bool CIO::IO_I_Socket_State_Film_Box_Dtc(__in int nSelect)
+{
+#if (GET_INSPECTOR == SYS_FILM_PEEL_OFF)
+	if (nSelect == LEFT_SIDE) {
+		return AJIN_IO->GetInputIoBit(DIO_INPUT_X0_26_SOCKET_STAGE_UNIT_PCB_FILM_DETECTOR_SENSOR_LEFT);
+	}
+	if (nSelect == RIGHT_SIDE) {
+		return AJIN_IO->GetInputIoBit(DIO_INPUT_X0_27_SOCKET_STAGE_UNIT_PCB_FILM_DETECTOR_SENSOR_RIGHT);
+	}
+#else
+	return true;
+#endif
+}
+
+bool CIO::IO_I_Socket_State_Work_Zone_Dtc()
+{
+#if (GET_INSPECTOR == SYS_FILM_PEEL_OFF)
+	return AJIN_IO->GetInputIoBit(DIO_INPUT_X0_29_SOCKET_STAGE_UNIT_WORK_ZONE_AREA_SENSOR) ;
+#else
+	return true;
+#endif
+}
+
+bool CIO::IO_I_Socket_State_PCB_Dtc()
+{
+#if (GET_INSPECTOR == SYS_FILM_PEEL_OFF)
+	return AJIN_IO->GetInputIoBit(DIO_INPUT_X0_31_SOCKET_STAGE_UNIT_PCB_DETECTOR_SENSOR);
+#else
+	return true;
+#endif
+}
+
+bool CIO::IO_I_IZN10E_Ion(__in int nSelect)
+{
+#if (GET_INSPECTOR == SYS_FILM_PEEL_OFF)
+	if (nSelect == LEFT_SIDE) {
+		return AJIN_IO->GetInputIoBit(DIO_INPUT_X1_22_IONIZER_UNIT_ION_CHECK_LEFT);
+	}
+	if (nSelect == RIGHT_SIDE) {
+		return AJIN_IO->GetInputIoBit(DIO_INPUT_X1_26_IONIZER_UNIT_ION_CHECK_RIGHT);
+	}
+#else
+	return true;
+#endif
+}
+
+bool CIO::IO_I_IZN10E_Error(__in int nSelect)
+{
+#if (GET_INSPECTOR == SYS_FILM_PEEL_OFF)
+	if (nSelect == LEFT_SIDE) {
+		return AJIN_IO->GetInputIoBit(DIO_INPUT_X1_23_IONIZER_UNIT_ERROR_CHECK_LEFT);
+	}
+	if (nSelect == RIGHT_SIDE) {
+		return AJIN_IO->GetInputIoBit(DIO_INPUT_X1_27_IONIZER_UNIT_ERROR_CHECK_RIGHT);
+	}
+#else
+	return true;
+#endif
+}
+
+bool CIO::IO_I_IZN10E_Maintence(__in int nSelect)
+{
+#if (GET_INSPECTOR == SYS_FILM_PEEL_OFF)
+	if (nSelect == LEFT_SIDE) {
+		return AJIN_IO->GetInputIoBit(DIO_INPUT_X1_24_IONIZER_UNIT_MAINTENANCE_CHECK_LEFT);
+	}
+	if (nSelect == RIGHT_SIDE) {
+		return AJIN_IO->GetInputIoBit(DIO_INPUT_X1_28_IONIZER_UNIT_MAINTENANCE_CHECK_RIGHT);
+	}
+#else
+	return true;
+#endif
+}
+bool CIO::IO_O_Socket_State_PCB_Gripper_On(bool bCheckStatus)
+{
+#if (GET_INSPECTOR == SYS_FILM_PEEL_OFF)
+	auto bRet = false;
+
+	//if (IO_I_Socket_State_PCB_Gripper_On())
+	//	return bRet;
+
+	AJIN_IO->SendOutputBit(DIO_OUTPUT_Y1_19_SOCKET_STAGE_UNIT_PCB_GRIPPER_CYLINDER_OPEN_OFF, FALSE);
+	AJIN_IO->SendOutputBit(DIO_OUTPUT_Y1_18_SOCKET_STAGE_UNIT_PCB_GRIPPER_CYLINDER_CLOSE_ON, TRUE);
+
+	auto bOn = DIO_INPUT_X1_18_SOCKET_STAGE_UNIT_PCB_GRIPPER_CYLINDER_CLOSE_ON;
+	auto bOff = DIO_INPUT_X1_19_SOCKET_STAGE_UNIT_PCB_GRIPPER_CYLINDER_OPEN_OFF;
+
+	if (bCheckStatus == true)
+	{
+		bRet = WaitStatus(bOn, bOff);
+		Sleep(500);
+	}
+	else
+	{
+		bRet = true;
+	}
+	return bRet;
+#else
+	return true;
+#endif
+}
+
+bool CIO::IO_O_Socket_State_PCB_Gripper_Off(bool bCheckStatus)
+{
+#if (GET_INSPECTOR == SYS_FILM_PEEL_OFF)
+	auto bRet = false;
+
+	//if (IO_I_Socket_State_PCB_Gripper_Off())
+	//	return bRet;
+
+	AJIN_IO->SendOutputBit(DIO_OUTPUT_Y1_18_SOCKET_STAGE_UNIT_PCB_GRIPPER_CYLINDER_CLOSE_ON, FALSE);
+	AJIN_IO->SendOutputBit(DIO_OUTPUT_Y1_19_SOCKET_STAGE_UNIT_PCB_GRIPPER_CYLINDER_OPEN_OFF, TRUE);
+
+	auto bOn = DIO_INPUT_X1_19_SOCKET_STAGE_UNIT_PCB_GRIPPER_CYLINDER_OPEN_OFF;
+	auto bOff = DIO_INPUT_X1_18_SOCKET_STAGE_UNIT_PCB_GRIPPER_CYLINDER_CLOSE_ON;
+
+	if (bCheckStatus == true)
+	{
+		bRet = WaitStatus(bOn, bOff);
+		Sleep(500);
+	}
+	else
+	{
+		bRet = true;
+	}
+	return bRet;
+#else
+	return true;
+#endif
+}
+
+bool CIO::IO_O_Socket_State_PCB_Gripper_Up(bool bCheckStatus)
+{
+#if (GET_INSPECTOR == SYS_FILM_PEEL_OFF)
+	auto bRet = false;
+
+	AJIN_IO->SendOutputBit(DIO_OUTPUT_Y1_21_SOCKET_STAGE_UNIT_PCB_GRIPPER_CYLINDER_DOWN, FALSE);
+	AJIN_IO->SendOutputBit(DIO_OUTPUT_Y1_20_SOCKET_STAGE_UNIT_PCB_GRIPPER_CYLINDER_UP, TRUE);
+
+	auto bOn = DIO_INPUT_X1_20_SOCKET_STAGE_UNIT_PCB_GRIPPER_CYLINDER_UP;
+	auto bOff = DIO_INPUT_X1_21_SOCKET_STAGE_UNIT_PCB_GRIPPER_CYLINDER_DOWN;
+
+	if (bCheckStatus == true)
+	{
+		bRet = WaitStatus(bOn, bOff);
+		Sleep(500);
+	}
+	else
+	{
+		bRet = true;
+	}
+	return bRet;
+#else
+	return true;
+#endif
+}
+
+bool CIO::IO_O_Socket_State_PCB_Gripper_Down(bool bCheckStatus)
+{
+#if (GET_INSPECTOR == SYS_FILM_PEEL_OFF)
+	auto bRet = false;
+
+	AJIN_IO->SendOutputBit(DIO_OUTPUT_Y1_20_SOCKET_STAGE_UNIT_PCB_GRIPPER_CYLINDER_UP, FALSE);
+	AJIN_IO->SendOutputBit(DIO_OUTPUT_Y1_21_SOCKET_STAGE_UNIT_PCB_GRIPPER_CYLINDER_DOWN, TRUE);
+
+	auto bOn = DIO_INPUT_X1_21_SOCKET_STAGE_UNIT_PCB_GRIPPER_CYLINDER_DOWN;
+	auto bOff = DIO_INPUT_X1_20_SOCKET_STAGE_UNIT_PCB_GRIPPER_CYLINDER_UP;
+
+	if (bCheckStatus == true)
+	{
+		bRet = WaitStatus(bOn, bOff);
+		Sleep(500);
+	}
+	else
+	{
+		bRet = true;
+	}
+	return bRet;
+#else
+	return true;
+#endif
+}
+
+
+bool CIO::IO_O_CoverPush_Gripper_Up(bool bCheckStatus)
+{
+	auto bRet = false;
+#if (GET_INSPECTOR == SYS_FILM_PEEL_OFF)
+	AJIN_IO->SendOutputBit(DIO_OUTPUT_Y1_31_LENS_COVER_PUSH_UNIT_UPDOWN_GRIPPER_CYLINDER_DOWN, FALSE);
+	AJIN_IO->SendOutputBit(DIO_OUTPUT_Y1_30_LENS_COVER_PUSH_UNIT_UPDOWN_GRIPPER_CYLINDER_UP, TRUE);
+
+	auto bOn = DIO_INPUT_X1_30_LENS_COVER_PUSH_UNIT_UPDOWN_GRIPPER_CYLINDER_UP;
+	auto bOff = DIO_INPUT_X1_31_LENS_COVER_PUSH_UNIT_UPDOWN_GRIPPER_CYLINDER_DOWN;
+
+	if (bCheckStatus == true)
+	{
+		bRet = WaitStatus(bOn, bOff);
+		Sleep(500);
+	}
+	else
+	{
+		bRet = true;
+	}
+#else
+	return true;
+#endif
+	return bRet;
+}
+
+bool CIO::IO_O_CoverPush_Gripper_Down(bool bCheckStatus)
+{
+	auto bRet = false;
+#if (GET_INSPECTOR == SYS_FILM_PEEL_OFF)
+	AJIN_IO->SendOutputBit(DIO_OUTPUT_Y1_30_LENS_COVER_PUSH_UNIT_UPDOWN_GRIPPER_CYLINDER_UP, FALSE);
+	AJIN_IO->SendOutputBit(DIO_OUTPUT_Y1_31_LENS_COVER_PUSH_UNIT_UPDOWN_GRIPPER_CYLINDER_DOWN, TRUE);
+
+	auto bOn = DIO_INPUT_X1_31_LENS_COVER_PUSH_UNIT_UPDOWN_GRIPPER_CYLINDER_DOWN;
+	auto bOff = DIO_INPUT_X1_30_LENS_COVER_PUSH_UNIT_UPDOWN_GRIPPER_CYLINDER_UP;
+
+	if (bCheckStatus == true)
+	{
+		bRet = WaitStatus(bOn, bOff);
+		Sleep(500);
+	}
+	else
+	{
+		bRet = true;
+	}
+#else
+	return true;
+#endif
+	return bRet;
+}
+
+bool CIO::IO_O_Flim_Gripper_For(__in int nSelect, bool bCheckStatus)
+{
+	auto bRet = false;
+	auto bOn = 0;
+	auto bOff = 0;
+#if (GET_INSPECTOR == SYS_FILM_PEEL_OFF)
+	if (nSelect == LEFT_SIDE) {
+		AJIN_IO->SendOutputBit(DIO_OUTPUT_Y1_06_GRIPPER_UNIT_GRIPPER_FRONT_CYLINDER_LEFT, TRUE);
+		AJIN_IO->SendOutputBit(DIO_OUTPUT_Y1_07_GRIPPER_UNIT_GRIPPER_REAR_CYLINDER_LEFT, FALSE);
+
+		bOn = DIO_INPUT_X1_06_GRIPPER_UNIT_GRIPPER_FRONT_CYLINDER_LEFT;
+		bOff = DIO_INPUT_X1_07_GRIPPER_UNIT_GRIPPER_REAR_CYLINDER_LEFT;
+	}
+	if (nSelect == RIGHT_SIDE) {
+		AJIN_IO->SendOutputBit(DIO_OUTPUT_Y1_08_GRIPPER_UNIT_GRIPPER_FRONT_CYLINDER_RIGHT, TRUE);
+		AJIN_IO->SendOutputBit(DIO_OUTPUT_Y1_09_GRIPPER_UNIT_GRIPPER_REAR_CYLINDER_RIGHT, FALSE);
+
+		bOn = DIO_INPUT_X1_08_GRIPPER_UNIT_GRIPPER_FRONT_CYLINDER_RIGHT;
+		bOff = DIO_INPUT_X1_09_GRIPPER_UNIT_GRIPPER_REAR_CYLINDER_RIGHT;
+	}
+
+	if (bCheckStatus == true)
+	{
+		bRet = WaitStatus(bOn, bOff);
+		Sleep(500);
+	}
+	else
+	{
+		bRet = true;
+	}
+#else
+	return true;
+#endif
+	return bRet;
+}
+
+bool CIO::IO_O_Flim_Gripper_Back(__in int nSelect, bool bCheckStatus)
+{
+	auto bRet = false;
+	auto bOn  = 0;
+	auto bOff = 0;
+#if (GET_INSPECTOR == SYS_FILM_PEEL_OFF)
+	if (nSelect == LEFT_SIDE) {
+		AJIN_IO->SendOutputBit(DIO_OUTPUT_Y1_06_GRIPPER_UNIT_GRIPPER_FRONT_CYLINDER_LEFT, FALSE);
+		AJIN_IO->SendOutputBit(DIO_OUTPUT_Y1_07_GRIPPER_UNIT_GRIPPER_REAR_CYLINDER_LEFT, TRUE);
+
+		bOn = DIO_INPUT_X1_07_GRIPPER_UNIT_GRIPPER_REAR_CYLINDER_LEFT;
+		bOff = DIO_INPUT_X1_06_GRIPPER_UNIT_GRIPPER_FRONT_CYLINDER_LEFT;
+	}
+	if (nSelect == RIGHT_SIDE) {
+		AJIN_IO->SendOutputBit(DIO_OUTPUT_Y1_08_GRIPPER_UNIT_GRIPPER_FRONT_CYLINDER_RIGHT, FALSE);
+		AJIN_IO->SendOutputBit(DIO_OUTPUT_Y1_09_GRIPPER_UNIT_GRIPPER_REAR_CYLINDER_RIGHT, TRUE);
+
+		bOn = DIO_INPUT_X1_09_GRIPPER_UNIT_GRIPPER_REAR_CYLINDER_RIGHT;
+		bOff = DIO_INPUT_X1_08_GRIPPER_UNIT_GRIPPER_FRONT_CYLINDER_RIGHT;
+	}
+
+	if (bCheckStatus == true)
+	{
+		bRet = WaitStatus(bOn, bOff);
+		Sleep(500);
+	}
+	else
+	{
+		bRet = true;
+	}
+#else
+	return true;
+#endif
+	return bRet;
+}
+
+bool CIO::IO_O_Flim_Gripper_On(__in int nSelect, bool bCheckStatus)
+{
+	auto bRet = false;
+	auto bOn = 0;
+	auto bOff = 0;
+#if (GET_INSPECTOR == SYS_FILM_PEEL_OFF)
+	if (nSelect == LEFT_SIDE) {
+		AJIN_IO->SendOutputBit(DIO_OUTPUT_Y1_00_GRIPPER_UNIT_FILM_GRIPPER_CYLINDER_ON_LEFT, TRUE);
+		AJIN_IO->SendOutputBit(DIO_OUTPUT_Y1_01_GRIPPER_UNIT_FILM_GRIPPER_CYLINDER_OFF_LEFT, FALSE);
+
+		bOn = DIO_INPUT_X1_00_GRIPPER_UNIT_FILM_GRIPPER_CYLINDER_ON_LEFT;
+		bOff = DIO_INPUT_X1_01_GRIPPER_UNIT_FILM_GRIPPER_CYLINDER_OFF_LEFT;
+	}
+	if (nSelect == RIGHT_SIDE) {
+		AJIN_IO->SendOutputBit(DIO_OUTPUT_Y1_02_GRIPPER_UNIT_FILM_GRIPPER_CYLINDER_ON_RIGHT, TRUE);
+		AJIN_IO->SendOutputBit(DIO_OUTPUT_Y1_03_GRIPPER_UNIT_FILM_GRIPPER_CYLINDER_OFF_RIGHT, FALSE);
+
+		bOn = DIO_INPUT_X1_02_GRIPPER_UNIT_FILM_GRIPPER_CYLINDER_ON_RIGHT;
+		bOff = DIO_INPUT_X1_03_GRIPPER_UNIT_FILM_GRIPPER_CYLINDER_OFF_RIGHT;
+	}
+
+	if (bCheckStatus == true)
+	{
+		bRet = WaitStatus(bOn, bOff);
+		Sleep(500);
+	}
+	else
+	{
+		bRet = true;
+	}
+#else
+	return true;
+#endif
+	return bRet;
+}
+
+bool CIO::IO_O_Flim_Gripper_Off(__in int nSelect, bool bCheckStatus)
+{
+	auto bRet = false;
+	auto bOn = 0;
+	auto bOff = 0;
+#if (GET_INSPECTOR == SYS_FILM_PEEL_OFF)
+	if (nSelect == LEFT_SIDE) {
+		AJIN_IO->SendOutputBit(DIO_OUTPUT_Y1_00_GRIPPER_UNIT_FILM_GRIPPER_CYLINDER_ON_LEFT, FALSE);
+		AJIN_IO->SendOutputBit(DIO_OUTPUT_Y1_01_GRIPPER_UNIT_FILM_GRIPPER_CYLINDER_OFF_LEFT, TRUE);
+
+		bOn = DIO_INPUT_X1_01_GRIPPER_UNIT_FILM_GRIPPER_CYLINDER_OFF_LEFT;
+		bOff = DIO_INPUT_X1_00_GRIPPER_UNIT_FILM_GRIPPER_CYLINDER_ON_LEFT;
+	}
+	if (nSelect == RIGHT_SIDE) {
+		AJIN_IO->SendOutputBit(DIO_OUTPUT_Y1_02_GRIPPER_UNIT_FILM_GRIPPER_CYLINDER_ON_RIGHT, FALSE);
+		AJIN_IO->SendOutputBit(DIO_OUTPUT_Y1_03_GRIPPER_UNIT_FILM_GRIPPER_CYLINDER_OFF_RIGHT, TRUE);
+
+		bOn = DIO_INPUT_X1_03_GRIPPER_UNIT_FILM_GRIPPER_CYLINDER_OFF_RIGHT;
+		bOff = DIO_INPUT_X1_02_GRIPPER_UNIT_FILM_GRIPPER_CYLINDER_ON_RIGHT;
+	}
+
+	if (bCheckStatus == true)
+	{
+		bRet = WaitStatus(bOn, bOff);
+		Sleep(500);
+	}
+	else
+	{
+		bRet = true;
+	}
+#else
+	return true;
+#endif
+	return bRet;
+}
+
+bool CIO::IO_O_Flim_Gripper_Cover_On(__in int nSelect, bool bCheckStatus)
+{
+	auto bRet = false;
+	auto bOn = 0;
+	auto bOff = 0;
+#if (GET_INSPECTOR == SYS_FILM_PEEL_OFF)
+	if (nSelect == LEFT_SIDE) {
+		AJIN_IO->SendOutputBit(DIO_OUTPUT_Y1_12_GRIPPER_UNIT_COVER_GRIPPER_CYLINDER_ON_LEFT, TRUE);
+		AJIN_IO->SendOutputBit(DIO_OUTPUT_Y1_13_GRIPPER_UNIT_COVER_GRIPPER_CYLINDER_OFF_LEFT, FALSE);
+
+		bOn = DIO_INPUT_X1_12_GRIPPER_UNIT_COVER_GRIPPER_CYLINDER_ON_LEFT;
+		bOff = DIO_INPUT_X1_13_GRIPPER_UNIT_COVER_GRIPPER_CYLINDER_OFF_LEFT;
+	}
+	if (nSelect == RIGHT_SIDE) {
+		AJIN_IO->SendOutputBit(DIO_OUTPUT_Y1_14_GRIPPER_UNIT_COVER_GRIPPER_CYLINDER_ON_RIGHT, TRUE);
+		AJIN_IO->SendOutputBit(DIO_OUTPUT_Y1_15_GRIPPER_UNIT_COVER_GRIPPER_CYLINDER_OFF_RIGHT, FALSE);
+
+		bOn = DIO_INPUT_X1_14_GRIPPER_UNIT_COVER_GRIPPER_CYLINDER_ON_RIGHT;
+		bOff = DIO_INPUT_X1_15_GRIPPER_UNIT_COVER_GRIPPER_CYLINDER_OFF_RIGHT;
+	}
+
+	if (bCheckStatus == true)
+	{
+		bRet = WaitStatus(bOn, bOff);
+		Sleep(500);
+	}
+	else
+	{
+		bRet = true;
+	}
+#else
+	return true;
+#endif
+	return bRet;
+}
+
+bool CIO::IO_O_Flim_Gripper_Cover_Off(__in int nSelect, bool bCheckStatus)
+{
+	auto bRet = false;
+	auto bOn = 0;
+	auto bOff = 0;
+#if (GET_INSPECTOR == SYS_FILM_PEEL_OFF)
+	if (nSelect == LEFT_SIDE) {
+		AJIN_IO->SendOutputBit(DIO_OUTPUT_Y1_12_GRIPPER_UNIT_COVER_GRIPPER_CYLINDER_ON_LEFT, FALSE);
+		AJIN_IO->SendOutputBit(DIO_OUTPUT_Y1_13_GRIPPER_UNIT_COVER_GRIPPER_CYLINDER_OFF_LEFT, TRUE);
+
+		bOn = DIO_INPUT_X1_13_GRIPPER_UNIT_COVER_GRIPPER_CYLINDER_OFF_LEFT;
+		bOff = DIO_INPUT_X1_12_GRIPPER_UNIT_COVER_GRIPPER_CYLINDER_ON_LEFT;
+	}
+	if (nSelect == RIGHT_SIDE) {
+		AJIN_IO->SendOutputBit(DIO_OUTPUT_Y1_14_GRIPPER_UNIT_COVER_GRIPPER_CYLINDER_ON_RIGHT, FALSE);
+		AJIN_IO->SendOutputBit(DIO_OUTPUT_Y1_15_GRIPPER_UNIT_COVER_GRIPPER_CYLINDER_OFF_RIGHT, TRUE);
+
+		bOn = DIO_INPUT_X1_15_GRIPPER_UNIT_COVER_GRIPPER_CYLINDER_OFF_RIGHT;
+		bOff = DIO_INPUT_X1_14_GRIPPER_UNIT_COVER_GRIPPER_CYLINDER_ON_RIGHT;
+	}
+
+	if (bCheckStatus == true)
+	{
+		bRet = WaitStatus(bOn, bOff);
+		Sleep(500);
+	}
+	else
+	{
+		bRet = true;
+	}
+#else
+	return true;
+#endif
+	return bRet;
+}
+
+void CIO::IO_O_Flim_Gripper_Air_Blow(__in int nSelect, __in bool bOn)
+{
+#if (GET_INSPECTOR == SYS_FILM_PEEL_OFF)
+	if (nSelect == LEFT_SIDE) {
+		AJIN_IO->SendOutputBit(DIO_OUTPUT_Y0_22_GRIPPER_UNIT_AIR_BLOW_UNIT_LEFT, bOn);
+	}
+	if (nSelect == RIGHT_SIDE) {
+		AJIN_IO->SendOutputBit(DIO_OUTPUT_Y0_22_GRIPPER_UNIT_AIR_BLOW_UNIT_LEFT, bOn);
+	}
+#endif
+}
+
+void CIO::IO_O_IZN10E_Power(__in int nSelect, __in bool bOn)
+{
+#if (GET_INSPECTOR == SYS_FILM_PEEL_OFF)
+	if (nSelect == LEFT_SIDE) {
+		AJIN_IO->SendOutputBit(DIO_OUTPUT_Y1_22_IONIZER_UNIT_POWER_ONOFF_LEFT, bOn);
+	}
+	if (nSelect == RIGHT_SIDE) {
+		AJIN_IO->SendOutputBit(DIO_OUTPUT_Y1_26_IONIZER_UNIT_POWER_ONOFF_RIGHT, bOn);
+	}
+#endif
+}
+
+void CIO::IO_O_IZN10E_Ion(__in int nSelect, __in bool bOn)
+{
+#if (GET_INSPECTOR == SYS_FILM_PEEL_OFF)
+	if (nSelect == LEFT_SIDE) {
+		AJIN_IO->SendOutputBit(DIO_OUTPUT_Y1_23_IONIZER_UNIT_ION_ONOFF_LEFT, bOn);
+	}
+	if (nSelect == RIGHT_SIDE) {
+		AJIN_IO->SendOutputBit(DIO_OUTPUT_Y1_27_IONIZER_UNIT_ION_ONOFF_RIGHT, bOn);
+	}
+#endif
+}
+
+void CIO::IO_O_IZN10E_Reset(__in int nSelect, __in bool bOn)
+{
+#if (GET_INSPECTOR == SYS_FILM_PEEL_OFF)
+	if (nSelect == LEFT_SIDE) {
+		AJIN_IO->SendOutputBit(DIO_OUTPUT_Y1_24_IONIZER_UNIT_RESET_LEFT, bOn);
+	}
+	if (nSelect == RIGHT_SIDE) {
+		AJIN_IO->SendOutputBit(DIO_OUTPUT_Y1_28_IONIZER_UNIT_RESET_RIGHT, bOn);
+	}
+#endif
 }
 
 // DOOR ALL LOCK
@@ -526,6 +1249,10 @@ bool CIO::IO_Door_All_Lock(__in bool bLock)
 	AJIN_IO->SendOutputBit(DIO_INPUT_X0_14_RIGHT_DOORLOCK2_OPENCLOSE, TRUE);
 	AJIN_IO->SendOutputBit(DIO_INPUT_X0_15_BACK_DOORLOCK1_OPENCLOSE, TRUE);
 	AJIN_IO->SendOutputBit(DIO_INPUT_X0_16_BACK_DOORLOCK2_OPENCLOSE, TRUE);
+#elif(GET_INSPECTOR == SYS_FILM_PEEL_OFF)
+	AJIN_IO->SendOutputBit(DIO_INPUT_X0_16_REAR_DOORLOCK1_OPENCLOSE, TRUE);
+	AJIN_IO->SendOutputBit(DIO_INPUT_X0_17_REAR_DOORLOCK2_OPENCLOSE, TRUE);
+	AJIN_IO->SendOutputBit(DIO_INPUT_X0_18_REAR_DOORLOCK3_OPENCLOSE, TRUE);
 #endif
 
 
@@ -560,10 +1287,11 @@ bool CIO::IO_Door_All_Lock(__in bool bLock)
 }
 
 // DOOR FRONT1 LOCK
+
 bool CIO::IO_Door_Front1_Lock(__in bool bLock)
 {
 	auto bRet = false;
-
+#if(GET_INSPECTOR == SYS_OQC_SFR_MULTI_CL) || (GET_INSPECTOR == SYS_OQC_SFR_SINGLE_CL) || (GET_INSPECTOR == SYS_DISTORTION_30)
 	auto Out = 0;
 	auto InOpenClose = 0;
 	auto inLock = 0;
@@ -575,6 +1303,9 @@ bool CIO::IO_Door_Front1_Lock(__in bool bLock)
 	InOpenClose = DIO_INPUT_X0_10_FRONT_DOORLOCK_OPENCLOSE;
 	
 	bRet = WaitStatus(InOpenClose, bLock);
+#elif(GET_INSPECTOR == SYS_FILM_PEEL_OFF)
+	bRet = true;
+#endif
 	return bRet;
 }
 
@@ -599,6 +1330,12 @@ bool CIO::IO_Door_Rear1_Lock(__in bool bLock)
 
 	// door 상태 확인 
 	InOpenClose = DIO_INPUT_X0_13_BACK_DOORLOCK1_OPENCLOSE;
+#elif(GET_INSPECTOR == SYS_FILM_PEEL_OFF)
+	Out = DIO_OUTPUT_Y0_16_REAR_DOORLOCK1_OPENCLOSE;
+	AJIN_IO->SendOutputBit(Out, bLock);
+
+	// door 상태 확인 
+	InOpenClose = DIO_INPUT_X0_16_REAR_DOORLOCK1_OPENCLOSE;
 #endif
 	
 	bRet = WaitStatus(InOpenClose, bLock);
@@ -626,6 +1363,32 @@ bool CIO::IO_Door_Rear2_Lock(__in bool bLock)
 
 	// door 상태 확인 
 	InOpenClose = DIO_INPUT_X0_14_BACK_DOORLOCK2_OPENCLOSE;
+#elif(GET_INSPECTOR == SYS_FILM_PEEL_OFF)
+	Out = DIO_OUTPUT_Y0_17_REAR_DOORLOCK2_OPENCLOSE;
+	AJIN_IO->SendOutputBit(Out, bLock);
+
+	// door 상태 확인 
+	InOpenClose = DIO_INPUT_X0_17_REAR_DOORLOCK2_OPENCLOSE;
+#endif
+
+	bRet = WaitStatus(InOpenClose, bLock);
+	return bRet;
+}
+
+bool CIO::IO_Door_Rear3_Lock(__in bool bLock)
+{
+	auto bRet = false;
+
+	auto Out = 0;
+	auto InOpenClose = 0;
+	auto inLock = 0;
+
+#if(GET_INSPECTOR == SYS_FILM_PEEL_OFF)
+	Out = DIO_OUTPUT_Y0_18_REAR_DOORLOCK3_OPENCLOSE;
+	AJIN_IO->SendOutputBit(Out, bLock);
+
+	// door 상태 확인 
+	InOpenClose = DIO_INPUT_X0_18_REAR_DOORLOCK3_OPENCLOSE;
 #endif
 
 	bRet = WaitStatus(InOpenClose, bLock);

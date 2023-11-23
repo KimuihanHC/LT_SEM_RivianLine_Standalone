@@ -49,10 +49,53 @@ public:
 	static bool IO_O_ProbePin_Down(bool bCheckStatus = true);
 	static bool MoveSocketToSaftyZone();
 
+	static void IO_O_Muting(__in bool bOn);
+
+	static bool IO_I_Socket_State_PCB_Gripper_On();
+	static bool IO_I_Socket_State_PCB_Gripper_Off();
+	static bool IO_I_Socket_State_PCB_Gripper_Up();
+	static bool IO_I_Socket_State_PCB_Gripper_Down();
+	static bool IO_I_CoverPush_Gripper_Up();
+	static bool IO_I_CoverPush_Gripper_Down();
+	static bool IO_I_Flim_Gripper_For(__in int nSelect);
+	static bool IO_I_Flim_Gripper_Back(__in int nSelect);
+	static bool IO_I_Flim_Gripper_On(__in int nSelect);
+	static bool IO_I_Flim_Gripper_Off(__in int nSelect);
+	static bool IO_I_Flim_Gripper_Cover_On(__in int nSelect);
+	static bool IO_I_Flim_Gripper_Cover_Off(__in int nSelect);
+	static bool IO_I_Flim_Gripper_Film_Box_Dtc(__in int nSelect);
+	static bool IO_I_Socket_State_Film_Box_Dtc(__in int nSelect);
+	static bool IO_I_Socket_State_Work_Zone_Dtc();
+	static bool IO_I_Socket_State_PCB_Dtc();
+
+	static bool IO_I_IZN10E_Ion(__in int nSelect);
+	static bool IO_I_IZN10E_Error(__in int nSelect);
+	static bool IO_I_IZN10E_Maintence(__in int nSelect);
+
+	static bool IO_O_Socket_State_PCB_Gripper_On(bool bCheckStatus = true);
+	static bool IO_O_Socket_State_PCB_Gripper_Off(bool bCheckStatus = true);
+	static bool IO_O_Socket_State_PCB_Gripper_Up(bool bCheckStatus = true);
+	static bool IO_O_Socket_State_PCB_Gripper_Down(bool bCheckStatus = true);
+	static bool IO_O_CoverPush_Gripper_Up(bool bCheckStatus = true);
+	static bool IO_O_CoverPush_Gripper_Down(bool bCheckStatus = true);
+	static bool IO_O_Flim_Gripper_For(__in int nSelect, bool bCheckStatus = true);
+	static bool IO_O_Flim_Gripper_Back(__in int nSelect, bool bCheckStatus = true);
+	static bool IO_O_Flim_Gripper_On(__in int nSelect, bool bCheckStatus = true);
+	static bool IO_O_Flim_Gripper_Off(__in int nSelect, bool bCheckStatus = true);
+	static bool IO_O_Flim_Gripper_Cover_On(__in int nSelect, bool bCheckStatus = true);
+	static bool IO_O_Flim_Gripper_Cover_Off(__in int nSelect, bool bCheckStatus = true);
+	static void IO_O_Flim_Gripper_Air_Blow(__in int nSelect, __in bool bOn);
+
+	static void IO_O_IZN10E_Power(__in int nSelect, __in bool bOn);
+	static void IO_O_IZN10E_Ion(__in int nSelect, __in bool bOn);
+	static void IO_O_IZN10E_Reset(__in int nSelect, __in bool bOn);
+
 	static bool IO_Door_All_Lock	(__in bool bLock);
+
 	bool IO_Door_Front1_Lock		(__in bool bLock);
 	bool IO_Door_Rear1_Lock			(__in bool bLock);
 	bool IO_Door_Rear2_Lock			(__in bool bLock);
+	bool IO_Door_Rear3_Lock			(__in bool bLock);
 
 protected:
 };

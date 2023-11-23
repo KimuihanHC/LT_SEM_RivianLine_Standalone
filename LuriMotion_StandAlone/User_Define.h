@@ -34,8 +34,9 @@ struct tcp_keepalive {
 #define RCVALL_OFF				0
 #define RCVALL_ON				1
 #define RCVALL_SOCKETLEVELONLY	2
-#define MAX_WAITCOMM_NUM		6		
+#define MAX_WAITCOMM_NUM		6	
 #define MAX_TESTER_NUM			8
+
 // [21.1017.2]
 #define MAX_USER_NUM			20
 // [21.1021.1]
@@ -142,6 +143,14 @@ enum enDoorLIst
 	EDoor_Right,
 	EDoor_Back_Left,
 	EDoor_Back_Right,
+	EDoor_Max
+};
+#elif (GET_INSPECTOR == SYS_FILM_PEEL_OFF)
+enum enDoorLIst
+{
+	EDoor_Rear1 = 0,
+	EDoor_Rear2,
+	EDoor_Rear3,
 	EDoor_Max
 };
 #endif

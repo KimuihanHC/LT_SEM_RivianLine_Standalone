@@ -15,6 +15,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Common", "Common\Common.vcx
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug_Film_Peel_Off|x64 = Debug_Film_Peel_Off|x64
+		Debug_Film_Peel_Off|x86 = Debug_Film_Peel_Off|x86
 		Debug_Intrinsic_Cal|x64 = Debug_Intrinsic_Cal|x64
 		Debug_Intrinsic_Cal|x86 = Debug_Intrinsic_Cal|x86
 		Debug_OQC_Single|x64 = Debug_OQC_Single|x64
@@ -37,6 +39,10 @@ Global
 		Unicode Release|x86 = Unicode Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7EFFB4D8-85D6-4BDE-A71E-BB7341F6E15C}.Debug_Film_Peel_Off|x64.ActiveCfg = Debug_Film_Peel_Off|x64
+		{7EFFB4D8-85D6-4BDE-A71E-BB7341F6E15C}.Debug_Film_Peel_Off|x64.Build.0 = Debug_Film_Peel_Off|x64
+		{7EFFB4D8-85D6-4BDE-A71E-BB7341F6E15C}.Debug_Film_Peel_Off|x86.ActiveCfg = Debug_Intrinsic_Cal|Win32
+		{7EFFB4D8-85D6-4BDE-A71E-BB7341F6E15C}.Debug_Film_Peel_Off|x86.Build.0 = Debug_Intrinsic_Cal|Win32
 		{7EFFB4D8-85D6-4BDE-A71E-BB7341F6E15C}.Debug_Intrinsic_Cal|x64.ActiveCfg = Debug_Intrinsic_Cal|x64
 		{7EFFB4D8-85D6-4BDE-A71E-BB7341F6E15C}.Debug_Intrinsic_Cal|x64.Build.0 = Debug_Intrinsic_Cal|x64
 		{7EFFB4D8-85D6-4BDE-A71E-BB7341F6E15C}.Debug_Intrinsic_Cal|x86.ActiveCfg = Debug_Intrinsic_Cal|Win32
@@ -77,6 +83,10 @@ Global
 		{7EFFB4D8-85D6-4BDE-A71E-BB7341F6E15C}.Unicode Release|x64.Build.0 = Unicode Release|x64
 		{7EFFB4D8-85D6-4BDE-A71E-BB7341F6E15C}.Unicode Release|x86.ActiveCfg = Unicode Release|Win32
 		{7EFFB4D8-85D6-4BDE-A71E-BB7341F6E15C}.Unicode Release|x86.Build.0 = Unicode Release|Win32
+		{BCDB7360-84CD-4911-8F47-EADFE7F4C33B}.Debug_Film_Peel_Off|x64.ActiveCfg = Debug|x64
+		{BCDB7360-84CD-4911-8F47-EADFE7F4C33B}.Debug_Film_Peel_Off|x64.Build.0 = Debug|x64
+		{BCDB7360-84CD-4911-8F47-EADFE7F4C33B}.Debug_Film_Peel_Off|x86.ActiveCfg = Debug|Win32
+		{BCDB7360-84CD-4911-8F47-EADFE7F4C33B}.Debug_Film_Peel_Off|x86.Build.0 = Debug|Win32
 		{BCDB7360-84CD-4911-8F47-EADFE7F4C33B}.Debug_Intrinsic_Cal|x64.ActiveCfg = Debug|x64
 		{BCDB7360-84CD-4911-8F47-EADFE7F4C33B}.Debug_Intrinsic_Cal|x64.Build.0 = Debug|x64
 		{BCDB7360-84CD-4911-8F47-EADFE7F4C33B}.Debug_Intrinsic_Cal|x86.ActiveCfg = Debug|Win32
@@ -117,6 +127,10 @@ Global
 		{BCDB7360-84CD-4911-8F47-EADFE7F4C33B}.Unicode Release|x64.Build.0 = Unicode Release|x64
 		{BCDB7360-84CD-4911-8F47-EADFE7F4C33B}.Unicode Release|x86.ActiveCfg = Unicode Release|Win32
 		{BCDB7360-84CD-4911-8F47-EADFE7F4C33B}.Unicode Release|x86.Build.0 = Unicode Release|Win32
+		{797E6A46-2B33-47EF-A37F-6093E845C7D8}.Debug_Film_Peel_Off|x64.ActiveCfg = Debug|x64
+		{797E6A46-2B33-47EF-A37F-6093E845C7D8}.Debug_Film_Peel_Off|x64.Build.0 = Debug|x64
+		{797E6A46-2B33-47EF-A37F-6093E845C7D8}.Debug_Film_Peel_Off|x86.ActiveCfg = Debug|Win32
+		{797E6A46-2B33-47EF-A37F-6093E845C7D8}.Debug_Film_Peel_Off|x86.Build.0 = Debug|Win32
 		{797E6A46-2B33-47EF-A37F-6093E845C7D8}.Debug_Intrinsic_Cal|x64.ActiveCfg = Debug|x64
 		{797E6A46-2B33-47EF-A37F-6093E845C7D8}.Debug_Intrinsic_Cal|x64.Build.0 = Debug|x64
 		{797E6A46-2B33-47EF-A37F-6093E845C7D8}.Debug_Intrinsic_Cal|x86.ActiveCfg = Debug|Win32

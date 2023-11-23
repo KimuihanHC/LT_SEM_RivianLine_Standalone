@@ -49,12 +49,19 @@
 #define MOTOR_MAX_COUNT					2
 #elif (GET_INSPECTOR == SYS_OQC_SFR_SINGLE_CL || GET_INSPECTOR == SYS_DISTORTION_30)
 #define MOTOR_MAX_COUNT					1
+#elif (GET_INSPECTOR == SYS_FILM_PEEL_OFF)
+#define MOTOR_MAX_COUNT					2
 #else
 #define MOTOR_MAX_COUNT					1
 #endif
 
+#if (GET_INSPECTOR == SYS_OQC_SFR_SINGLE_CL) || (GET_INSPECTOR == SYS_OQC_SFR_MULTI_CL) || (GET_INSPECTOR == SYS_DISTORTION_30)
 #define INPUT_IO_MAX_COUNT				32
 #define OUTPUT_IO_MAX_COUNT				32
+#elif (GET_INSPECTOR == SYS_FILM_PEEL_OFF)
+#define INPUT_IO_MAX_COUNT				64
+#define OUTPUT_IO_MAX_COUNT				64
+#endif
 
 #define INPUT_IO_READ_COUNT				32		// 한번에 읽어올 i/O 수
 #define OUTPUT_IO_READ_COUNT			32		// 한번에 읽어올 I/O 수
@@ -154,6 +161,11 @@
 #elif(GET_INSPECTOR == SYS_DISTORTION_30)
 #include "SeqIntrinsic30.h"
 #define SEQUENCE		CSeqIntrinsic30::Instance()
+
+#elif(GET_INSPECTOR == SYS_FILM_PEEL_OFF)
+#include "SeqFilmPeelOff.h"
+#define SEQUENCE		CFilmPeelOff::Instance()
+#define FN300			CLED_PD_FN300::GetInstance()
 #endif
 
 #include "AjinBoard.h"
@@ -162,9 +174,10 @@
 #include "Ajin_IO.h"
 #define AJIN_IO			CAjinDio::Instance()
 
+//#if(!MOTION_FAS_NONE)
 #include "Fastech_PR_Motion.h"
 #define FAS_MO			CFastech_Motion::Instance()
-
+//#endif
 #include "BCRCtrl.h"
 static CBCRCtrl g_HandyBCR;
 

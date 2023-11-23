@@ -385,6 +385,9 @@ void CDlgIo::InitComponent_DigitalIO()
 
 	for (int i = 0; i < 4; i++)
 	{
+#if(GET_INSPECTOR == SYS_FILM_PEEL_OFF)
+		m_btn_IoPageMove[i].ShowWindow(TRUE);
+#endif
 		m_btn_IoPageMove[i].SetTextColor(RGB(255,0,0));
 		if( i % 2 == 0 )
 			m_btn_IoPageMove[i].SetWindowText(_T("PREV"));

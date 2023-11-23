@@ -856,6 +856,7 @@ void CDlgAxisHomeProgress::OnBnClickedButtonMotorOriginall()
 				COMMON->ShowMsgDlg_Domodal(_T("Please connect the motor and proceed with initialization."), MODE_QUESTION);
 		}
 	}
+#
 
 	if (COMMON->GetPermissionGrade() == LVL_OPER)
 	{
@@ -863,12 +864,20 @@ void CDlgAxisHomeProgress::OnBnClickedButtonMotorOriginall()
 		{
 			for (int nOutSignal = 0; nOutSignal < EDoor_Max; nOutSignal++)
 			{
+#if(GET_INSPECTOR == SYS_OQC_SFR_MULTI_CL)  || (GET_INSPECTOR == SYS_OQC_SFR_SINGLE_CL) || (GET_INSPECTOR == SYS_DISTORTION_30)
 				AJIN_IO->SendOutputBit(DIO_OUTPUT_Y0_10_DOORLOCK_ONOFF_FRONT + nOutSignal, TRUE);
+#elif(GET_INSPECTOR == SYS_FILM_PEEL_OFF)
+				AJIN_IO->SendOutputBit(DIO_INPUT_X0_16_REAR_DOORLOCK1_OPENCLOSE + nOutSignal, TRUE);
+#endif
 			}
 			Sleep(200);
 			for (int nOutSignal = 0; nOutSignal < EDoor_Max; nOutSignal++)
 			{
+#if(GET_INSPECTOR == SYS_OQC_SFR_MULTI_CL)  || (GET_INSPECTOR == SYS_OQC_SFR_SINGLE_CL) || (GET_INSPECTOR == SYS_DISTORTION_30)
 				AJIN_IO->SendOutputBit(DIO_OUTPUT_Y0_10_DOORLOCK_ONOFF_FRONT + nOutSignal, TRUE);
+#elif(GET_INSPECTOR == SYS_FILM_PEEL_OFF)
+				AJIN_IO->SendOutputBit(DIO_INPUT_X0_16_REAR_DOORLOCK1_OPENCLOSE + nOutSignal, TRUE);
+#endif
 			}
 			Sleep(200);
 			if (TRUE != COMMON->GetInterlock_DoorCheck())

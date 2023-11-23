@@ -420,6 +420,7 @@ BOOL CSequence::Run_IO()
 
 BOOL CSequence::Run_Equipment()
 {
+
 	// EMO 
 	Equipment_EMO();
 
@@ -531,10 +532,11 @@ enMCErrCode CSequence::Equipment_EMO()
 
 	if (!CIO::IO_I_EMO())
 	{
+#if(!MOTION_FAS_NONE)
 //#if(GET_INSPECTOR != SYS_DISTORTION_30)
 		FAS_MO->Disconnect_EziServo();
 		FAS_MO->m_bConnectedInitFlag = 0;
-
+#endif
 		CMotion::MO_AllAxis_Reset();
 //#endif
 		COMMON->SetEMOAllInitFlag(TRUE);

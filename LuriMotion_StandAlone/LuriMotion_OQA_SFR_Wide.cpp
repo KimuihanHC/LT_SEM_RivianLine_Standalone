@@ -154,7 +154,11 @@ BOOL CLuriMotion_OQA_SFR_WideApp::PreTranslateMessage(MSG* pMsg)
 	if (pMsg->message == WM_LBUTTONDOWN || pMsg->message == WM_LBUTTONUP)
 	{
 		COMMON->SetSleepStarted(GetTickCount64());
+#if(GET_INSPECTOR == SYS_OQC_SFR_MULTI_CL) || (GET_INSPECTOR == SYS_OQC_SFR_SINGLE_CL) || (GET_INSPECTOR == SYS_DISTORTION_30)
 		AJIN_IO->SendOutputBit(DIO_OUTPUT_Y0_0B_SLEEP_MODE_ON, FALSE);
+#elif(GET_INSPECTOR == SYS_FILM_PEEL_OFF)
+		AJIN_IO->SendOutputBit(DIO_OUTPUT_Y0_11_SLEEP_MODE_ON, FALSE);
+#endif
 	}
 
 	return CWinApp::PreTranslateMessage(pMsg);

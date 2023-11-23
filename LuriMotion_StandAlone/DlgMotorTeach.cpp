@@ -2164,10 +2164,11 @@ void CDlgMotorTeach::CylinderManual_Acitve(UINT nID)
 
 	if (nOutSignal < 7)
 	{
-
+#if(GET_INSPECTOR == SYS_OQC_SFR_MULTI_CL) || (GET_INSPECTOR == SYS_OQC_SFR_SINGLE_CL) || (GET_INSPECTOR == SYS_DISTORTION_30)
 		AJIN_IO->SendOutputBit(DIO_OUTPUT_Y0_10_DOORLOCK_ONOFF_FRONT + nOutSignal, nReverse);
-
-
+#elif(GET_INSPECTOR == SYS_FILM_PEEL_OFF)
+		AJIN_IO->SendOutputBit(DIO_INPUT_X0_16_REAR_DOORLOCK1_OPENCLOSE + nOutSignal, nReverse);
+#endif
 		m_btnMotorManual[nBack][nFront].SetStaticStyle(CVGStatic::StaticStyle_Data);
 		m_btnMotorManual[nBack][nFront].SetColorStyle(CVGStatic::ColorStyle_Green);
 		m_btnMotorManual[nBack][nFront].SetFont_Gdip(L"Arial", 9.0F);

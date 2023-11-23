@@ -1045,6 +1045,19 @@ void	CCommon::SetDoorLock(enDoorLIst DoorId, BOOL action)
 		io = DIO_OUTPUT_Y0_16_DOORLOCK_ONOFF_BACK2;
 		break;
 	}
+#elif (GET_INSPECTOR == SYS_FILM_PEEL_OFF)
+	switch (DoorId)
+	{
+	case EDoor_Rear1:
+		io = DIO_INPUT_X0_16_REAR_DOORLOCK1_OPENCLOSE;
+		break;
+	case EDoor_Rear2:
+		io = DIO_INPUT_X0_17_REAR_DOORLOCK2_OPENCLOSE;
+		break;
+	case EDoor_Rear3:
+		io = DIO_INPUT_X0_18_REAR_DOORLOCK3_OPENCLOSE;
+		break;
+	}
 #endif
 	AJIN_IO->SendOutputBit(io, action);
 }
@@ -1121,6 +1134,19 @@ BOOL	CCommon::GetDoorClose(enDoorLIst DoorId)
 		break;
 	case EDoor_Back_Right:
 		io = DIO_INPUT_X0_16_BACK_DOORLOCK2_OPENCLOSE;
+		break;
+	}
+#elif (GET_INSPECTOR == SYS_FILM_PEEL_OFF)
+	switch (DoorId)
+	{
+	case EDoor_Rear1:
+		io = DIO_INPUT_X0_16_REAR_DOORLOCK1_OPENCLOSE;
+		break;
+	case EDoor_Rear2:
+		io = DIO_INPUT_X0_17_REAR_DOORLOCK2_OPENCLOSE;
+		break;
+	case EDoor_Rear3:
+		io = DIO_INPUT_X0_18_REAR_DOORLOCK3_OPENCLOSE;
 		break;
 	}
 #endif
@@ -1203,6 +1229,7 @@ BOOL CCommon::GetAreaStop_OkPush()
 
 void CCommon::SetProbePinCylinder_UpDown(BOOL bFlag)
 {
+#if(GET_INSPECTOR == SYS_OQC_SFR_MULTI_CL) || (GET_INSPECTOR == SYS_OQC_SFR_SINGLE_CL) || (GET_INSPECTOR == SYS_DISTORTION_30)
 	if (bFlag == _CYLINDER_UP)
 	{
 		AJIN_IO->SendOutputBit(DIO_OUTPUT_Y0_0E_PROBEPIN_CYLINDER_UP, TRUE);
@@ -1213,6 +1240,7 @@ void CCommon::SetProbePinCylinder_UpDown(BOOL bFlag)
 		AJIN_IO->SendOutputBit(DIO_OUTPUT_Y0_0E_PROBEPIN_CYLINDER_UP, FALSE);
 		AJIN_IO->SendOutputBit(DIO_OUTPUT_Y0_0F_PROBEPIN_CYLINDER_DOWN, TRUE);
 	}
+#endif
 }
 
 
