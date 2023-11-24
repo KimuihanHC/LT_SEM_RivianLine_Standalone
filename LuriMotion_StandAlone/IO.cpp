@@ -191,6 +191,7 @@ bool CIO::IO_I_Socket_In()
 #if (GET_INSPECTOR == SYS_OQC_SFR_MULTI_CL) || (GET_INSPECTOR == SYS_OQC_SFR_SINGLE_CL)
 	return (AJIN_IO->GetInputIoBit(DIO_INPUT_X0_1C_SOCKET_IN) == TRUE
 		&& AJIN_IO->GetInputIoBit(DIO_INPUT_X0_1D_SOCKET_OUT) == FALSE);
+#else
 	return true;
 #endif
 }
@@ -535,13 +536,13 @@ bool CIO::MoveSocketToSaftyZone()
 	bRet &= IO_O_Socket_Down();
 	bRet &= IO_O_Socket_In();
 #if (GET_INSPECTOR == SYS_FILM_PEEL_OFF)
-	bRet &= IO_O_Socket_State_PCB_Gripper_Off();
-	bRet &= IO_O_Socket_State_PCB_Gripper_Down();
-	bRet &= IO_O_CoverPush_Gripper_Up();
+	bRet &= IO_O_SocketState_PCB_Gripper_Off();
+	bRet &= IO_O_SocketState_PCB_Gripper_Down();
+	bRet &= IO_O_LensCoverPush_Sylinder_Up();
 	for (int i = 0; i < MAX_SIDE; i++) {
-		bRet &= IO_O_Flim_Gripper_Back(i);
-		bRet &= IO_O_Flim_Gripper_Off(i);
-		bRet &= IO_O_Flim_Gripper_Cover_Off(i);
+		bRet &= IO_O_FlimGripper_Back(i);
+		bRet &= IO_O_FlimGripper_Off(i);
+		bRet &= IO_O_FlimGripper_Cover_Off(i);
 	}
 	
 #endif
@@ -555,7 +556,7 @@ void CIO::IO_O_Muting(__in bool bOn)
 #endif
 }
 
-bool CIO::IO_I_Socket_State_PCB_Gripper_On()
+bool CIO::IO_I_SocketState_PCB_Gripper_On()
 {
 #if (GET_INSPECTOR == SYS_FILM_PEEL_OFF)
 	return (AJIN_IO->GetInputIoBit(DIO_INPUT_X1_18_SOCKET_STAGE_UNIT_PCB_GRIPPER_CYLINDER_CLOSE_ON) == TRUE
@@ -564,7 +565,7 @@ bool CIO::IO_I_Socket_State_PCB_Gripper_On()
 #endif
 }
 
-bool CIO::IO_I_Socket_State_PCB_Gripper_Off()
+bool CIO::IO_I_SocketState_PCB_Gripper_Off()
 {
 #if (GET_INSPECTOR == SYS_FILM_PEEL_OFF)
 	return (AJIN_IO->GetInputIoBit(DIO_INPUT_X1_18_SOCKET_STAGE_UNIT_PCB_GRIPPER_CYLINDER_CLOSE_ON) == FALSE
@@ -574,7 +575,7 @@ bool CIO::IO_I_Socket_State_PCB_Gripper_Off()
 #endif
 }
 
-bool CIO::IO_I_Socket_State_PCB_Gripper_Up()
+bool CIO::IO_I_SocketState_PCB_Gripper_Up()
 {
 #if (GET_INSPECTOR == SYS_FILM_PEEL_OFF)
 	return (AJIN_IO->GetInputIoBit(DIO_INPUT_X1_20_SOCKET_STAGE_UNIT_PCB_GRIPPER_CYLINDER_UP) == TRUE
@@ -584,7 +585,7 @@ bool CIO::IO_I_Socket_State_PCB_Gripper_Up()
 #endif
 }
 
-bool CIO::IO_I_Socket_State_PCB_Gripper_Down()
+bool CIO::IO_I_SocketState_PCB_Gripper_Down()
 {
 #if (GET_INSPECTOR == SYS_FILM_PEEL_OFF)
 	return (AJIN_IO->GetInputIoBit(DIO_INPUT_X1_20_SOCKET_STAGE_UNIT_PCB_GRIPPER_CYLINDER_UP) == FALSE
@@ -594,7 +595,7 @@ bool CIO::IO_I_Socket_State_PCB_Gripper_Down()
 #endif
 }
 
-bool CIO::IO_I_CoverPush_Gripper_Up()
+bool CIO::IO_I_LensCoverPush_Sylinder_Up()
 {
 #if (GET_INSPECTOR == SYS_FILM_PEEL_OFF)
 	return (AJIN_IO->GetInputIoBit(DIO_INPUT_X1_30_LENS_COVER_PUSH_UNIT_UPDOWN_GRIPPER_CYLINDER_UP) == TRUE
@@ -604,7 +605,7 @@ bool CIO::IO_I_CoverPush_Gripper_Up()
 #endif
 }
 
-bool CIO::IO_I_CoverPush_Gripper_Down()
+bool CIO::IO_I_LensCoverPush_Sylinder_Down()
 {
 #if (GET_INSPECTOR == SYS_FILM_PEEL_OFF)
 	return (AJIN_IO->GetInputIoBit(DIO_INPUT_X1_30_LENS_COVER_PUSH_UNIT_UPDOWN_GRIPPER_CYLINDER_UP) == FALSE
@@ -614,7 +615,7 @@ bool CIO::IO_I_CoverPush_Gripper_Down()
 #endif
 }
 
-bool CIO::IO_I_Flim_Gripper_For(__in int nSelect)
+bool CIO::IO_I_FlimGripper_For(__in int nSelect)
 {
 #if (GET_INSPECTOR == SYS_FILM_PEEL_OFF)
 	if (nSelect == LEFT_SIDE) {
@@ -630,7 +631,7 @@ bool CIO::IO_I_Flim_Gripper_For(__in int nSelect)
 #endif
 }
 
-bool CIO::IO_I_Flim_Gripper_Back(__in int nSelect)
+bool CIO::IO_I_FlimGripper_Back(__in int nSelect)
 {
 #if (GET_INSPECTOR == SYS_FILM_PEEL_OFF)
 	if (nSelect == LEFT_SIDE) {
@@ -646,7 +647,7 @@ bool CIO::IO_I_Flim_Gripper_Back(__in int nSelect)
 #endif
 }
 
-bool CIO::IO_I_Flim_Gripper_On(__in int nSelect)
+bool CIO::IO_I_FlimGripper_On(__in int nSelect)
 {
 #if (GET_INSPECTOR == SYS_FILM_PEEL_OFF)
 	if (nSelect == LEFT_SIDE) {
@@ -662,7 +663,7 @@ bool CIO::IO_I_Flim_Gripper_On(__in int nSelect)
 #endif
 }
 
-bool CIO::IO_I_Flim_Gripper_Off(__in int nSelect)
+bool CIO::IO_I_FlimGripper_Off(__in int nSelect)
 {
 #if (GET_INSPECTOR == SYS_FILM_PEEL_OFF)
 	if (nSelect == LEFT_SIDE) {
@@ -678,7 +679,7 @@ bool CIO::IO_I_Flim_Gripper_Off(__in int nSelect)
 #endif
 }
 
-bool CIO::IO_I_Flim_Gripper_Cover_On(__in int nSelect)
+bool CIO::IO_I_FlimGripper_Cover_On(__in int nSelect)
 {
 #if (GET_INSPECTOR == SYS_FILM_PEEL_OFF)
 	if (nSelect == LEFT_SIDE) {
@@ -694,7 +695,7 @@ bool CIO::IO_I_Flim_Gripper_Cover_On(__in int nSelect)
 #endif
 }
 
-bool CIO::IO_I_Flim_Gripper_Cover_Off(__in int nSelect)
+bool CIO::IO_I_FlimGripper_Cover_Off(__in int nSelect)
 {
 #if (GET_INSPECTOR == SYS_FILM_PEEL_OFF)
 	if (nSelect == LEFT_SIDE) {
@@ -710,7 +711,7 @@ bool CIO::IO_I_Flim_Gripper_Cover_Off(__in int nSelect)
 #endif
 }
 
-bool CIO::IO_I_Flim_Gripper_Film_Box_Dtc(__in int nSelect)
+bool CIO::IO_I_FlimGripper_Film_Box_Dtc(__in int nSelect)
 {
 #if (GET_INSPECTOR == SYS_FILM_PEEL_OFF)
 	if (nSelect == LEFT_SIDE) {
@@ -724,7 +725,7 @@ bool CIO::IO_I_Flim_Gripper_Film_Box_Dtc(__in int nSelect)
 #endif
 }
 
-bool CIO::IO_I_Socket_State_Film_Box_Dtc(__in int nSelect)
+bool CIO::IO_I_SocketState_Film_Box_Dtc(__in int nSelect)
 {
 #if (GET_INSPECTOR == SYS_FILM_PEEL_OFF)
 	if (nSelect == LEFT_SIDE) {
@@ -738,7 +739,7 @@ bool CIO::IO_I_Socket_State_Film_Box_Dtc(__in int nSelect)
 #endif
 }
 
-bool CIO::IO_I_Socket_State_Work_Zone_Dtc()
+bool CIO::IO_I_SocketState_Work_Zone_Dtc()
 {
 #if (GET_INSPECTOR == SYS_FILM_PEEL_OFF)
 	return AJIN_IO->GetInputIoBit(DIO_INPUT_X0_29_SOCKET_STAGE_UNIT_WORK_ZONE_AREA_SENSOR) ;
@@ -747,7 +748,7 @@ bool CIO::IO_I_Socket_State_Work_Zone_Dtc()
 #endif
 }
 
-bool CIO::IO_I_Socket_State_PCB_Dtc()
+bool CIO::IO_I_SocketState_PCB_Dtc()
 {
 #if (GET_INSPECTOR == SYS_FILM_PEEL_OFF)
 	return AJIN_IO->GetInputIoBit(DIO_INPUT_X0_31_SOCKET_STAGE_UNIT_PCB_DETECTOR_SENSOR);
@@ -797,7 +798,7 @@ bool CIO::IO_I_IZN10E_Maintence(__in int nSelect)
 	return true;
 #endif
 }
-bool CIO::IO_O_Socket_State_PCB_Gripper_On(bool bCheckStatus)
+bool CIO::IO_O_SocketState_PCB_Gripper_On(bool bCheckStatus)
 {
 #if (GET_INSPECTOR == SYS_FILM_PEEL_OFF)
 	auto bRet = false;
@@ -826,7 +827,7 @@ bool CIO::IO_O_Socket_State_PCB_Gripper_On(bool bCheckStatus)
 #endif
 }
 
-bool CIO::IO_O_Socket_State_PCB_Gripper_Off(bool bCheckStatus)
+bool CIO::IO_O_SocketState_PCB_Gripper_Off(bool bCheckStatus)
 {
 #if (GET_INSPECTOR == SYS_FILM_PEEL_OFF)
 	auto bRet = false;
@@ -855,7 +856,7 @@ bool CIO::IO_O_Socket_State_PCB_Gripper_Off(bool bCheckStatus)
 #endif
 }
 
-bool CIO::IO_O_Socket_State_PCB_Gripper_Up(bool bCheckStatus)
+bool CIO::IO_O_SocketState_PCB_Gripper_Up(bool bCheckStatus)
 {
 #if (GET_INSPECTOR == SYS_FILM_PEEL_OFF)
 	auto bRet = false;
@@ -881,7 +882,7 @@ bool CIO::IO_O_Socket_State_PCB_Gripper_Up(bool bCheckStatus)
 #endif
 }
 
-bool CIO::IO_O_Socket_State_PCB_Gripper_Down(bool bCheckStatus)
+bool CIO::IO_O_SocketState_PCB_Gripper_Down(bool bCheckStatus)
 {
 #if (GET_INSPECTOR == SYS_FILM_PEEL_OFF)
 	auto bRet = false;
@@ -908,7 +909,7 @@ bool CIO::IO_O_Socket_State_PCB_Gripper_Down(bool bCheckStatus)
 }
 
 
-bool CIO::IO_O_CoverPush_Gripper_Up(bool bCheckStatus)
+bool CIO::IO_O_LensCoverPush_Sylinder_Up(bool bCheckStatus)
 {
 	auto bRet = false;
 #if (GET_INSPECTOR == SYS_FILM_PEEL_OFF)
@@ -933,7 +934,7 @@ bool CIO::IO_O_CoverPush_Gripper_Up(bool bCheckStatus)
 	return bRet;
 }
 
-bool CIO::IO_O_CoverPush_Gripper_Down(bool bCheckStatus)
+bool CIO::IO_O_LensCoverPush_Sylinder_Down(bool bCheckStatus)
 {
 	auto bRet = false;
 #if (GET_INSPECTOR == SYS_FILM_PEEL_OFF)
@@ -958,7 +959,7 @@ bool CIO::IO_O_CoverPush_Gripper_Down(bool bCheckStatus)
 	return bRet;
 }
 
-bool CIO::IO_O_Flim_Gripper_For(__in int nSelect, bool bCheckStatus)
+bool CIO::IO_O_FlimGripper_For(__in int nSelect, bool bCheckStatus)
 {
 	auto bRet = false;
 	auto bOn = 0;
@@ -994,7 +995,7 @@ bool CIO::IO_O_Flim_Gripper_For(__in int nSelect, bool bCheckStatus)
 	return bRet;
 }
 
-bool CIO::IO_O_Flim_Gripper_Back(__in int nSelect, bool bCheckStatus)
+bool CIO::IO_O_FlimGripper_Back(__in int nSelect, bool bCheckStatus)
 {
 	auto bRet = false;
 	auto bOn  = 0;
@@ -1030,7 +1031,7 @@ bool CIO::IO_O_Flim_Gripper_Back(__in int nSelect, bool bCheckStatus)
 	return bRet;
 }
 
-bool CIO::IO_O_Flim_Gripper_On(__in int nSelect, bool bCheckStatus)
+bool CIO::IO_O_FlimGripper_On(__in int nSelect, bool bCheckStatus)
 {
 	auto bRet = false;
 	auto bOn = 0;
@@ -1066,7 +1067,7 @@ bool CIO::IO_O_Flim_Gripper_On(__in int nSelect, bool bCheckStatus)
 	return bRet;
 }
 
-bool CIO::IO_O_Flim_Gripper_Off(__in int nSelect, bool bCheckStatus)
+bool CIO::IO_O_FlimGripper_Off(__in int nSelect, bool bCheckStatus)
 {
 	auto bRet = false;
 	auto bOn = 0;
@@ -1102,7 +1103,7 @@ bool CIO::IO_O_Flim_Gripper_Off(__in int nSelect, bool bCheckStatus)
 	return bRet;
 }
 
-bool CIO::IO_O_Flim_Gripper_Cover_On(__in int nSelect, bool bCheckStatus)
+bool CIO::IO_O_FlimGripper_Cover_On(__in int nSelect, bool bCheckStatus)
 {
 	auto bRet = false;
 	auto bOn = 0;
@@ -1138,7 +1139,7 @@ bool CIO::IO_O_Flim_Gripper_Cover_On(__in int nSelect, bool bCheckStatus)
 	return bRet;
 }
 
-bool CIO::IO_O_Flim_Gripper_Cover_Off(__in int nSelect, bool bCheckStatus)
+bool CIO::IO_O_FlimGripper_Cover_Off(__in int nSelect, bool bCheckStatus)
 {
 	auto bRet = false;
 	auto bOn = 0;
@@ -1174,7 +1175,7 @@ bool CIO::IO_O_Flim_Gripper_Cover_Off(__in int nSelect, bool bCheckStatus)
 	return bRet;
 }
 
-void CIO::IO_O_Flim_Gripper_Air_Blow(__in int nSelect, __in bool bOn)
+void CIO::IO_O_FlimGripper_Air_Blow(__in int nSelect, __in bool bOn)
 {
 #if (GET_INSPECTOR == SYS_FILM_PEEL_OFF)
 	if (nSelect == LEFT_SIDE) {

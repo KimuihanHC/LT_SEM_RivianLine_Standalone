@@ -964,6 +964,7 @@ static LPCTSTR m_szTeachJogBtnEng[] =
 
 static LPCTSTR m_szTeachCylinderKor[] =
 {
+#if (GET_INSPECTOR == SYS_OQC_SFR_MULTI_CL) || (GET_INSPECTOR == SYS_OQC_SFR_SINGLE_CL) || (GET_INSPECTOR == SYS_DISTORTION_30)
 	_T("도어 인터락 전면"),
 	_T("도어 인터락 좌측1"),
 	_T("도어 인터락 좌측2"),
@@ -972,10 +973,18 @@ static LPCTSTR m_szTeachCylinderKor[] =
 	_T("도어 인터락 후면1"),
 	_T("도어 인터락 후면2"),
 	_T(" - "),
+#elif (GET_INSPECTOR == SYS_FILM_PEEL_OFF)
+	_T("도어 인터락 후면1"),
+	_T("도어 인터락 후면2"),
+	_T("도어 인터락 후면3"),
+	_T(" - "),
+#else
+#endif
 };
 
 static LPCTSTR m_szTeachCylinderEng[] =
 {
+#if (GET_INSPECTOR == SYS_OQC_SFR_MULTI_CL) || (GET_INSPECTOR == SYS_OQC_SFR_SINGLE_CL) || (GET_INSPECTOR == SYS_DISTORTION_30)
 	_T("DoorLock Front"),
 	_T("DoorLock Left1"),
 	_T("DoorLock Left2"),
@@ -984,6 +993,13 @@ static LPCTSTR m_szTeachCylinderEng[] =
 	_T("DoorLock Back1"),
 	_T("DoorLock Back2"),
 	_T(" - "),
+#elif (GET_INSPECTOR == SYS_FILM_PEEL_OFF)
+	_T("DoorLock Rear1"),
+	_T("DoorLock Rear2"),
+	_T("DoorLock Rear3"),
+	_T(" - "),
+#else
+#endif
 };
 
 

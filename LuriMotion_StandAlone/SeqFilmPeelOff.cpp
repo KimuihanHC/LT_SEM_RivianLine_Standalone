@@ -62,13 +62,13 @@ UINT CFilmPeelOff::StartOperation_Startup()
 
 	switch (StartUp_GetStep())
 	{
-	case SEQ_STEP_DISTORTION_STARTUP_STANDBY:
+	case SEQ_STEP_PEEL_OFF_STARTUP_STANDBY:
 		break;
 
-	case SEQ_STEP_DISTORTION_STARTUP_COMPLETE:
+	case SEQ_STEP_PEEL_OFF_STARTUP_COMPLETE:
 		break;
 
-	case SEQ_STEP_DISTORTION_STARTUP_ERROR:
+	case SEQ_STEP_PEEL_OFF_STARTUP_ERROR:
 		break;
 
 	case SEQ_STEP_DISTORTION_STARTUP_LOAD_START:
@@ -253,7 +253,7 @@ UINT CFilmPeelOff::StartOperation_Startup()
 		break;
 
 	case SEQ_STEP_DISTORTION_STARTUP_LOAD_END:			
-		StartUp_SetStep(SEQ_STEP_DISTORTION_STARTUP_COMPLETE);
+		StartUp_SetStep(SEQ_STEP_PEEL_OFF_STARTUP_COMPLETE);
 		break;
 
 	case SEQ_STEP_DISTORTION_STARTUP_UNLOAD_START:
@@ -381,7 +381,7 @@ UINT CFilmPeelOff::StartOperation_Startup()
 
 #endif
 	}
-		StartUp_SetStep(SEQ_STEP_DISTORTION_STARTUP_COMPLETE);
+		StartUp_SetStep(SEQ_STEP_PEEL_OFF_STARTUP_COMPLETE);
 		break;
 
 	case SEQ_STEP_DISTORTION_STARTUP_CAPTURE_START:
@@ -483,7 +483,7 @@ UINT CFilmPeelOff::StartOperation_Startup()
 
 #endif
 	}
-		StartUp_SetStep(SEQ_STEP_DISTORTION_STARTUP_COMPLETE);
+		StartUp_SetStep(SEQ_STEP_PEEL_OFF_STARTUP_COMPLETE);
 		break;
 
 	case SEQ_STEP_DISTORTION_STARTUP_CAL_START:
@@ -543,7 +543,7 @@ UINT CFilmPeelOff::StartOperation_Startup()
 		break;
 
 	case SEQ_STEP_DISTORTION_STARTUP_CAL_END:
-		StartUp_SetStep(SEQ_STEP_DISTORTION_STARTUP_COMPLETE);
+		StartUp_SetStep(SEQ_STEP_PEEL_OFF_STARTUP_COMPLETE);
 		break;
 
 	default:

@@ -987,7 +987,11 @@ void CDlgMotorTeach::InitComponent_MotorTeach()
 
 	//--------------------------------------------------------------------------
 	// 메뉴얼 UI
+#if (GET_INSPECTOR == SYS_OQC_SFR_MULTI_CL) || (GET_INSPECTOR == SYS_OQC_SFR_SINGLE_CL) || (GET_INSPECTOR == SYS_DISTORTION_30)
 	for (int i = 0; i < 8; i++)
+#elif (GET_INSPECTOR == SYS_FILM_PEEL_OFF)
+	for (int i = 0; i < 3; i++)
+#endif
 	{
 		m_stMotorManual[i].SetStaticStyle(CVGStatic::StaticStyle_Title_Sub);
 		m_stMotorManual[i].SetColorStyle(CVGStatic::ColorStyle_Turquois);
@@ -1404,7 +1408,11 @@ void CDlgMotorTeach::ChangeUI_Language()
 
 	//--------------------------------------------------------------------------
 	// 메뉴얼 UI
+#if (GET_INSPECTOR == SYS_OQC_SFR_MULTI_CL) || (GET_INSPECTOR == SYS_OQC_SFR_SINGLE_CL) || (GET_INSPECTOR == SYS_DISTORTION_30)
 	for (int i = 0; i < 8; i++)
+#elif (GET_INSPECTOR == SYS_FILM_PEEL_OFF)
+	for (int i = 0; i < 3; i++)
+#endif
 	{
 		m_stMotorManual[i].SetStaticStyle(CVGStatic::StaticStyle_Title_Sub);
 		m_stMotorManual[i].SetColorStyle(CVGStatic::ColorStyle_Turquois);
