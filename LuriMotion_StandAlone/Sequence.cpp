@@ -169,6 +169,7 @@ void CSequence::Start_StartupCheck(__in int nIdx, __in int nCaptureIdx)
 	pParam->nArg = nIdx;
 
 	m_hThreadStartupCheck = HANDLE(_beginthreadex(NULL, 0, Thread_StartupCheck, pParam, 0, NULL));
+
 }
 
 void CSequence::Stop_StartupCheck()
@@ -322,7 +323,7 @@ UINT CSequence::Run_StartupCheck()
 
 		if (err != MCEC_OK)
 		{
-			SHOW_ERROR((enMCErrCode)err);
+			//SHOW_ERROR((enMCErrCode)err);
 			break;
 		}
 
@@ -347,6 +348,7 @@ UINT CSequence::Thread_StartupCheck(__in LPVOID lParam)
 	pThis->Initialize_Startup(nIdx, capture);
 	err = pThis->Run_StartupCheck();
 	pThis->Finalize_Startup((enMCErrCode)err, nIdx, capture);
+
 	return 0;
 }
 

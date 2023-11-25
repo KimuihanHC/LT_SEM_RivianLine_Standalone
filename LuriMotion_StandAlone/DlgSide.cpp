@@ -125,8 +125,10 @@ void CDlgSide::OnShowWindow(BOOL bShow, UINT nStatus)
 	if (bShow)
 	{
 		SetTimer(TIMER_100_SWITCH_LAMPCHECK, 200, NULL);
+#if (TEST)
 		SetTimer(TIMER_200_EMO_POWER_CHECK, 200, NULL);
 		SetTimer(TIMER_300_CHANGE_MODE, 1000, NULL);
+#endif
 	}
 	else
 	{
@@ -423,6 +425,9 @@ BOOL CDlgSide::Check_Start()
 		TESTER_COMM stTester = *DATAMANAGER->GetCurrentTesterCommData();
 		m_UdpTester[0].Connect_Tester(stTester.dwTesterIP[0], stTester.nTesterPort[0], stTester.strTesterConnect[0], 1);
 	}
+#if (1)
+	return TRUE;
+#endif
 
 //#if (GET_INSPECTOR != SYS_DISTORTION_30)
 	// 2. 모터가 초기화가 되어있는가?
@@ -942,8 +947,11 @@ void CDlgSide::OnTimer(UINT_PTR nIDEvent)
 			//SetSIdeBarStopButton_LampOn();
 			m_SideStopFlag = TRUE;
 		}
-
+#if (TEST)
 		if (COMMON->bUseSleepMode == TRUE)
+#else
+		if (0)
+#endif
 		{
 			if (SEQUENCE->GetRunMode() == (RUN_MODE)eStop)
 			{
@@ -1105,10 +1113,10 @@ BOOL CDlgSide::Check_Switch_Start()
 {
 	if (COMMON->GetAreaStop_CancelPush() == TRUE)
 		return TRUE;
-
+#if (TEST)
 	if (FALSE == AJIN_IO->GetInputIoBit(DIO_INPUT_X0_04_EMO))
 		return TRUE;
-
+#endif
 	if (COMMON->GetAreaStop_OkPush() == TRUE)
 	{
 		if (TRUE == AJIN_IO->GetInputIoBit(DIO_INPUT_X0_01_START))
@@ -1117,10 +1125,17 @@ BOOL CDlgSide::Check_Switch_Start()
 			COMMON->SetAreaStop_OkPush(FALSE);
 		}
 	}
-
+#if (TEST)
 	if (SEQUENCE->ReadyToStart() && SEQUENCE->GetRunMode() != eStop)
+#else
+	if (SEQUENCE->GetRunMode() != eStop)
+#endif
 	{
+#if (TEST)
 		if (m_UdpTester[0].m_bTesterFlag_Ready == TRUE)
+#else
+		if (1)
+#endif
 			//	if(SEQUENCE->ReadyToStart())
 		{
 			if (SEQUENCE->GetAreaStopLampnSideFlag() == TRUE)
@@ -1135,8 +1150,11 @@ BOOL CDlgSide::Check_Switch_Start()
 				m_bFlagStartButtonLamp = TRUE;
 				AJIN_IO->ChangeBtnStatus(DIO_OUTPUT_Y0_01_START_SWITCH_LAMP, 0, TRUE);
 			}
-
+#if (TEST)
 			if (TRUE == AJIN_IO->GetInputIoBit(DIO_INPUT_X0_01_START))
+#else
+			if (1)
+#endif
 			{
 				if (m_MainManualFlag == TRUE)
 					return FALSE;

@@ -297,6 +297,12 @@ BEGIN_MESSAGE_MAP(CDlgMain, CDialogEx)
 	ON_BN_CLICKED(IDC_BTN_STARTUP_MODE6, &CDlgMain::OnBnClickedBtnStartupMode6)
 	ON_BN_CLICKED(IDC_BTN_STARTUP_MODE7, &CDlgMain::OnBnClickedBtnStartupMode7)
 	ON_BN_CLICKED(IDC_BTN_STARTUP_MODE8, &CDlgMain::OnBnClickedBtnStartupMode8)
+	ON_BN_CLICKED(IDC_BTN_STARTUP_MODE10, &CDlgMain::OnBnClickedBtnStartupMode10)
+	ON_BN_CLICKED(IDC_BTN_STARTUP_MODE9, &CDlgMain::OnBnClickedBtnStartupMode9)
+	ON_BN_CLICKED(IDC_BTN_STARTUP_MODE11, &CDlgMain::OnBnClickedBtnStartupMode11)
+	ON_BN_CLICKED(IDC_BTN_STARTUP_MODE12, &CDlgMain::OnBnClickedBtnStartupMode12)
+	ON_BN_CLICKED(IDC_BTN_STARTUP_MODE13, &CDlgMain::OnBnClickedBtnStartupMode13)
+	ON_BN_CLICKED(IDC_BTN_STARTUP_MODE14, &CDlgMain::OnBnClickedBtnStartupMode14)
 END_MESSAGE_MAP()
 
 BOOL CDlgMain::PreTranslateMessage(MSG* pMsg)
@@ -2737,6 +2743,36 @@ void CDlgMain::OnBnClickedBtnStartupMode8()
 	SEQUENCE->Start_StartupCheck(1, 5);
 }
 
+
+void CDlgMain::OnBnClickedBtnStartupMode10()
+{
+	SEQUENCE->Start_StartupCheck(SEQ_STEP_PEEL_OFF_STARTUP_WAITPOS_BTN);
+}
+void CDlgMain::OnBnClickedBtnStartupMode9()
+{
+	SEQUENCE->Start_StartupCheck(SEQ_STEP_PEEL_OFF_STARTUP_LOAD_BTN);
+}
+
+void CDlgMain::OnBnClickedBtnStartupMode11()
+{
+	SEQUENCE->Start_StartupCheck(SEQ_STEP_PEEL_OFF_STARTUP_BARCODE_BTN);
+}
+
+void CDlgMain::OnBnClickedBtnStartupMode12()
+{
+	SEQUENCE->Start_StartupCheck(SEQ_STEP_PEEL_OFF_STARTUP_LENSCOVERPUSH_BTN);
+}
+
+void CDlgMain::OnBnClickedBtnStartupMode13()
+{
+	SEQUENCE->Start_StartupCheck(SEQ_STEP_PEEL_OFF_STARTUP_FLIMGRIPPER_BTN);
+}
+
+void CDlgMain::OnBnClickedBtnStartupMode14()
+{
+	SEQUENCE->Start_StartupCheck(SEQ_STEP_PEEL_OFF_STARTUP_TESTER_BTN);
+}
+
 BOOL CDlgMain::IsCameraExistOrSocektClosed()
 {
 	EQ_BASIC_PARAM	stBasic = *DATAMANAGER->GetCurrentEqBasicData();
@@ -3024,3 +3060,10 @@ void CDlgMain::SetEnable_MoveCapture(__in bool enable)
 		m_btnMainStartUpMode[7].SetColorStyle(CVGStatic::ColorStyle_Black);
 	}	
 }
+
+
+
+
+
+
+

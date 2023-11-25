@@ -206,4 +206,10 @@ public:
 	afx_msg void OnBnClickedBtnStartupMode6();
 	afx_msg void OnBnClickedBtnStartupMode7();
 	afx_msg void OnBnClickedBtnStartupMode8();
+	afx_msg void OnBnClickedBtnStartupMode10();
+	afx_msg void OnBnClickedBtnStartupMode9();
+	afx_msg void OnBnClickedBtnStartupMode11();
+	afx_msg void OnBnClickedBtnStartupMode12();
+	afx_msg void OnBnClickedBtnStartupMode13();
+	afx_msg void OnBnClickedBtnStartupMode14();
 };
